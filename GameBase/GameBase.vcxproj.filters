@@ -35,10 +35,25 @@
     <ClInclude Include="tick\TickCallback.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="util\math\vector\Vector.h">
+    <ClInclude Include="util\math\vector\Vec.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="util\math\vector\Matrix.h">
+    <ClInclude Include="util\math\matrix\Mat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="util\math\vector\Vec2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="util\math\vector\Vec3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="util\math\vector\Vec4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="util\math\Math.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="util\math\vector\VecMath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

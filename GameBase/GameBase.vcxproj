@@ -27,8 +27,13 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="tick\TickCallback.h" />
     <ClInclude Include="tick\TickManager.h" />
-    <ClInclude Include="util\math\vector\Matrix.h" />
-    <ClInclude Include="util\math\vector\Vector.h" />
+    <ClInclude Include="util\math\Math.h" />
+    <ClInclude Include="util\math\matrix\Mat.h" />
+    <ClInclude Include="util\math\vector\Vec.h" />
+    <ClInclude Include="util\math\vector\Vec2.h" />
+    <ClInclude Include="util\math\vector\Vec3.h" />
+    <ClInclude Include="util\math\vector\Vec4.h" />
+    <ClInclude Include="util\math\vector\VecMath.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

@@ -1,12 +1,16 @@
 #include <iostream>
 
 #include "tick/TickManager.h"
-#include "util/math/vector/Vector.h"
+#include "util/math/vector/VecMath.h"
 
 using namespace PirkkBase;
 
 int main() {
-	Vector2<float> vec(8.f, 16.3f);
-	Vector2<float> e = vec;
+	Vec3f veca(2, 3, 4);
+	Vec3f vecb(5, 6, 7);
+	vecb += veca;
+
+	std::cout << cross(veca, vecb) << std::endl;
+
 	while (true);
 }
