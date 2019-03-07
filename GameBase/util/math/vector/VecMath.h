@@ -6,41 +6,6 @@
 #include "Vec4.h"
 
 namespace PirkkBase {
-#define PIRKK_VEC_ADD_OP_ARITH_VEC_VEC(op) template<typename T, size_t L> Vec<T, L> operator##op (const Vec<T, L> &a, const Vec<T, L> &b) { Vec<T, L> out; for (size_t i = 0; i < L; i++) out.data[i] = a.data[i] op b.data[i]; return out; }
-#define PIRKK_VEC_ADD_OP_ARITH_VEC_SCALAR(op) template<typename T, size_t L> Vec<T, L> operator##op (const Vec<T, L> &a, T b) { Vec<T, L> out; for (size_t i = 0; i < L; i++) out.data[i] = a.data[i] op b; return out; }
-#define PIRKK_VEC_ADD_OP_ARITH_SCALAR_VEC(op) template<typename T, size_t L> Vec<T, L> operator##op (T a, const Vec<T, L> &b) { Vec<T, L> out; for (size_t i = 0; i < L; i++) out.data[i] = a op b.data[i]; return out; }
-#define PIRKK_VEC_ADD_OP_ASSIGN_VEC_VEC(op) template<typename T, size_t L> Vec<T, L> operator##op (Vec<T, L> &a, const Vec<T, L> &b) { for (size_t i = 0; i < L; i++) a.data[i] op b.data[i]; return a; }
-#define PIRKK_VEC_ADD_OP_ASSIGN_VEC_SCALAR(op) template<typename T, size_t L> Vec<T, L> operator##op (Vec<T, L> &a, T b) { for (size_t i = 0; i < L; i++) a.data[i] op b; return a; }
-
-	PIRKK_VEC_ADD_OP_ARITH_VEC_VEC(+);
-	PIRKK_VEC_ADD_OP_ARITH_VEC_VEC(-);
-	PIRKK_VEC_ADD_OP_ARITH_VEC_VEC(*);
-	PIRKK_VEC_ADD_OP_ARITH_VEC_VEC(/ );
-	PIRKK_VEC_ADD_OP_ARITH_VEC_VEC(%);
-
-	PIRKK_VEC_ADD_OP_ARITH_VEC_SCALAR(+);
-	PIRKK_VEC_ADD_OP_ARITH_VEC_SCALAR(-);
-	PIRKK_VEC_ADD_OP_ARITH_VEC_SCALAR(*);
-	PIRKK_VEC_ADD_OP_ARITH_VEC_SCALAR(/ );
-	PIRKK_VEC_ADD_OP_ARITH_VEC_SCALAR(%);
-
-	PIRKK_VEC_ADD_OP_ARITH_SCALAR_VEC(+);
-	PIRKK_VEC_ADD_OP_ARITH_SCALAR_VEC(-);
-	PIRKK_VEC_ADD_OP_ARITH_SCALAR_VEC(*);
-	PIRKK_VEC_ADD_OP_ARITH_SCALAR_VEC(/ );
-	PIRKK_VEC_ADD_OP_ARITH_SCALAR_VEC(%);
-
-	PIRKK_VEC_ADD_OP_ASSIGN_VEC_VEC(+= );
-	PIRKK_VEC_ADD_OP_ASSIGN_VEC_VEC(-= );
-	PIRKK_VEC_ADD_OP_ASSIGN_VEC_VEC(*= );
-	PIRKK_VEC_ADD_OP_ASSIGN_VEC_VEC(/= );
-	PIRKK_VEC_ADD_OP_ASSIGN_VEC_VEC(%= );
-
-	PIRKK_VEC_ADD_OP_ASSIGN_VEC_SCALAR(+= );
-	PIRKK_VEC_ADD_OP_ASSIGN_VEC_SCALAR(-= );
-	PIRKK_VEC_ADD_OP_ASSIGN_VEC_SCALAR(*= );
-	PIRKK_VEC_ADD_OP_ASSIGN_VEC_SCALAR(/= );
-	PIRKK_VEC_ADD_OP_ASSIGN_VEC_SCALAR(%= );
 
 	// Dot product of two vectors
 	template<typename T, size_t L>

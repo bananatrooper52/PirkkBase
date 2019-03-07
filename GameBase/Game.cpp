@@ -8,9 +8,8 @@ using namespace PirkkBase;
 int main() {
 	Vec3f veca(2, 3, 4);
 	Vec3f vecb(5, 6, 7);
-	vecb += veca;
 
-	std::cout << cross(veca, vecb) << std::endl;
+	std::cout << veca + vecb << std::endl;
 
 	while (true);
 }

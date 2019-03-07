@@ -56,5 +56,20 @@
     <ClInclude Include="util\math\vector\VecMath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="util\math\matrix\Mat2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="util\math\matrix\Mat3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="util\math\matrix\Mat4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="util\math\matrix\MatMath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="util\math\vector\VecOp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
