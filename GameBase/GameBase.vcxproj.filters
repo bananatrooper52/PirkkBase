@@ -53,9 +53,6 @@
     <ClInclude Include="util\math\Math.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="util\math\vector\VecMath.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="util\math\matrix\Mat2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -66,9 +63,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="util\math\matrix\MatMath.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="util\math\vector\VecOp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

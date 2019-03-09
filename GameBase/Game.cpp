@@ -1,17 +1,30 @@
 #include <iostream>
 
 #include "tick/TickManager.h"
-#include "util/math/vector/VecMath.h"
+#include "util/math/Math.h"
 
 using namespace PirkkBase;
 
 int main() {
-	Vec3f veca(2, 3, 4);
-	Vec3f vecb(5, 6, 7);
+	Math::Vec2f vec(1, 2);
+	
+	Math::Vec2f a[3] = {
+		Math::Vec2f(-1, 2),
+		Math::Vec2f(0, 0),
+		Math::Vec2f(4, 0)
+	};
 
-	veca -= vecb;
+	Math::Vec3f b[2] = {
+		Math::Vec3f(-1, -1, 2),
+		Math::Vec3f(1, 3, 4)
+	};
 
-	std::cout << veca << std::endl;
+	Math::Mat3x2f mat(a);
+	Math::Mat2x3f bat(b);
+
+	Math::Mat2f out = mat * bat;
+
+	out.print();
 
 	while (true);
 }
