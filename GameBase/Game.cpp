@@ -9,7 +9,9 @@ int main() {
 	Vec3f veca(2, 3, 4);
 	Vec3f vecb(5, 6, 7);
 
-	std::cout << veca + vecb << std::endl;
+	veca -= vecb;
+
+	std::cout << veca << std::endl;
 
 	while (true);
 }
