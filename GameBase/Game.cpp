@@ -6,25 +6,22 @@
 using namespace PirkkBase;
 
 int main() {
-	Math::Vec2f vec(1, 2);
-	
-	Math::Vec2f a[3] = {
-		Math::Vec2f(-1, 2),
-		Math::Vec2f(0, 0),
-		Math::Vec2f(4, 0)
+	float init[] = {
+		1, 4, 7, 10,
+		2, 5, 8, 11,
+		3, 6, 9, 12
 	};
 
-	Math::Vec3f b[2] = {
-		Math::Vec3f(-1, -1, 2),
-		Math::Vec3f(1, 3, 4)
+	float meme[] = {
+		1, 2, 3, 4,
+		4, 5, 6, 5,
+		7, 8, 9, 6
 	};
 
-	Math::Mat3x2f mat(a);
-	Math::Mat2x3f bat(b);
+	Math::Mat3x4f mat(init);
+	Math::Mat3x4f sec(meme);
 
-	Math::Mat2f out = mat * bat;
-
-	out.print();
+	std::cout << sec.getRow(0) << std::endl;
 
 	while (true);
 }
