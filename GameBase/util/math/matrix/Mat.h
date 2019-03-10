@@ -164,13 +164,6 @@ Mat<T, W, H> operator##op(T a, const Mat<T, W, H> &b) {		\
 
 		// ASSIGNMENT OPERATORS //
 
-		// Mat op Mat
-#define PIRKK_MAT_OP_ASSIGN_MAT_MAT(op)									\
-template<typename T, size_t W, size_t H>								\
-Mat<T, W, H> operator##op##=(Mat<T, W, H> &a, const Mat<T, W, H> &b) {	\
-	return a = a op b;													\
-}
-
 		// Mat op Scalar
 #define PIRKK_MAT_OP_ASSIGN_MAT_SCALAR(op)				\
 template<typename T, size_t W, size_t H>				\
@@ -178,19 +171,25 @@ Mat<T, W, H> operator##op##=(Mat<T, W, H> &a, T b) {	\
 	return a = a op b;									\
 }
 
-		// All assignment functions
-#define PIRKK_MAT_OP_ASSIGN(op) PIRKK_MAT_OP_ASSIGN_MAT_MAT(op) PIRKK_MAT_OP_ASSIGN_MAT_SCALAR(op)
+		PIRKK_MAT_OP_ASSIGN_MAT_SCALAR(+);
+		PIRKK_MAT_OP_ASSIGN_MAT_SCALAR(-);
+		PIRKK_MAT_OP_ASSIGN_MAT_SCALAR(*);
+		PIRKK_MAT_OP_ASSIGN_MAT_SCALAR(/ );
+		PIRKK_MAT_OP_ASSIGN_MAT_SCALAR(%);
+		PIRKK_MAT_OP_ASSIGN_MAT_SCALAR(&);
+		PIRKK_MAT_OP_ASSIGN_MAT_SCALAR(| );
+		PIRKK_MAT_OP_ASSIGN_MAT_SCALAR(<< );
+		PIRKK_MAT_OP_ASSIGN_MAT_SCALAR(>> );
+		PIRKK_MAT_OP_ASSIGN_MAT_SCALAR(^);
 
-		PIRKK_MAT_OP_ASSIGN(+);
-		PIRKK_MAT_OP_ASSIGN(-);
-		PIRKK_MAT_OP_ASSIGN(*);
-		PIRKK_MAT_OP_ASSIGN(/ );
-		PIRKK_MAT_OP_ASSIGN(%);
-		PIRKK_MAT_OP_ASSIGN(&);
-		PIRKK_MAT_OP_ASSIGN(| );
-		PIRKK_MAT_OP_ASSIGN(<< );
-		PIRKK_MAT_OP_ASSIGN(>> );
-		PIRKK_MAT_OP_ASSIGN(^);
+		// Mat op Mat
+#define PIRKK_MAT_OP_ASSIGN_MAT_MAT(op)									\
+template<typename T, size_t W, size_t H>								\
+Mat<T, W, H> operator##op##=(Mat<T, W, H> &a, const Mat<T, W, H> &b) {	\
+	return a = a op b;													\
+}
+		PIRKK_MAT_OP_ASSIGN_MAT_MAT(+);
+		PIRKK_MAT_OP_ASSIGN_MAT_MAT(-);
 
 #include "Mat2.h"
 #include "Mat3.h"
