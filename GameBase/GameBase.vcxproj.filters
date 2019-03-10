@@ -53,16 +53,19 @@
     <ClInclude Include="util\math\Math.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="util\math\matrix\Mat2.h">
+    <ClInclude Include="util\math\quaternion\Quat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="util\math\matrix\Mat3.h">
+    <ClInclude Include="util\math\matrix\MatOp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="util\math\matrix\Mat4.h">
+    <ClInclude Include="util\math\matrix\MatTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="util\math\matrix\MatMath.h">
+    <ClInclude Include="util\math\vector\VecOp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="util\math\vector\VecTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

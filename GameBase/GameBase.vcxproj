@@ -29,14 +29,15 @@
     <ClInclude Include="tick\TickManager.h" />
     <ClInclude Include="util\math\Math.h" />
     <ClInclude Include="util\math\matrix\Mat.h" />
-    <ClInclude Include="util\math\matrix\Mat2.h" />
-    <ClInclude Include="util\math\matrix\Mat3.h" />
-    <ClInclude Include="util\math\matrix\Mat4.h" />
-    <ClInclude Include="util\math\matrix\MatMath.h" />
+    <ClInclude Include="util\math\matrix\MatOp.h" />
+    <ClInclude Include="util\math\matrix\MatTypes.h" />
+    <ClInclude Include="util\math\quaternion\Quat.h" />
     <ClInclude Include="util\math\vector\Vec.h" />
     <ClInclude Include="util\math\vector\Vec2.h" />
     <ClInclude Include="util\math\vector\Vec3.h" />
     <ClInclude Include="util\math\vector\Vec4.h" />
+    <ClInclude Include="util\math\vector\VecOp.h" />
+    <ClInclude Include="util\math\vector\VecTypes.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
