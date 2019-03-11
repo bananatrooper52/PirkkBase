@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
+#include <map>
 #include <functional>
 #include <atomic>
 
@@ -9,14 +9,16 @@
 namespace PirkkBase {
 	class TickManager {
 	private:
-		static std::vector<TickCallback> callbacks;
-		static std::atomic_bool running;
+		std::map<const char *, TickCallback *> callbacks;
+		std::atomic_bool running;
 
 	public:
-		static void start(); // CAREFUL - BLOCKS CALLING THREAD
-		static void stop();
-		static void loop(); 
-		static void registerCallback(TickCallback callback);
+		void start(); // CAREFUL - BLOCKS CALLING THREAD
+		void stop();
+		void loop(); 
+		void registerCallback(const char *name, TickCallback *callback);
+		void unregisterCallback(const char *name); // Remove callback from update list
+		TickCallback *getCallback(const char *name);
 	};
 }
 

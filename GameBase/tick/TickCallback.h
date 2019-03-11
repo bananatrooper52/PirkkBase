@@ -10,7 +10,7 @@ namespace PirkkBase {
 		std::function<void(float)> callback;
 		
 		float cycleDuration; // Length of each tick cycle
-		float delta; // Time since last update
+		float delta = 0; // Time since last update
 	public:
 
 		TickCallback(std::function<void(float)> _callback, float _cycleDuration);

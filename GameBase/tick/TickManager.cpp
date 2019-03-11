@@ -5,9 +5,6 @@
 
 using namespace PirkkBase;
 
-std::vector<TickCallback> TickManager::callbacks;
-std::atomic_bool TickManager::running = false;
-
 void TickManager::start() {
 	if (running) {
 		std::cerr << "TickManager is already started" << std::endl;
@@ -40,12 +37,22 @@ void TickManager::loop() {
 		lt = now;
 
 		// Update each callback
-		for (size_t i = 0; i < callbacks.size(); i++) {
-			callbacks[i].update(delta);
+		for (auto &it : callbacks) {
+			it.second->update(delta);
 		}
 	}
 }
 
-void TickManager::registerCallback(TickCallback callback) {
-	callbacks.push_back(callback);
+void TickManager::registerCallback(const char *name, TickCallback *callback) {
+	callbacks[name] = callback;
+}
+
+void TickManager::unregisterCallback(const char *name) {
+	callbacks.erase(name);
+}
+
+TickCallback *TickManager::getCallback(const char *name) {
+	auto it = callbacks.find(name);
+	if (it == callbacks.end()) throw std::runtime_error(std::string("Couldn't find callback: ") + std::string(name));
+	return it->second;
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "..\vector\Vec.h"
+#include "../vector/Vec.h"
 #include <iostream>
 #include <type_traits>
 

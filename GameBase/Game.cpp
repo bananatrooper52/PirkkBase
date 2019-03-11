@@ -1,17 +1,36 @@
 #include <iostream>
 
+#include "Game.h"
 #include "tick/TickManager.h"
-#include "util/math/Math.h"
+#include "math/Math.h"
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 
-using namespace PirkkBase;
+Game::Game() : window(Math::Vec2i(1366, 768), "Game") {
+	window.makeContextCurrent();
+
+	tickManager.registerCallback("tick", new TickCallback([=](float delta) { tick(delta); }, 1.f / 60.f));
+	tickManager.registerCallback("render", new TickCallback([=](float delta) { render(); }, 1.f / 60.f));
+	tickManager.start();
+
+}
+
+void Game::tick(float delta) {
+
+	if (window.shouldClose()) tickManager.stop();
+
+	window.swapBuffers();
+	glfwPollEvents();
+}
+
+void Game::render() {
+
+}
 
 int main() {
-	
-	Math::Mat4f mat = Math::translate(Math::Mat4f(), Math::Vec3f(10, 0, 0));
-	Math::Mat4f mat2 = Math::translate(Math::Mat4f(), Math::Vec3f(0, 0, 10));
-	Math::Vec4f test = mat * mat2 * Math::Vec4f(10, 10, 10, 1);
 
-	std::cout << test;
+	glewInit();
+	glfwInit();
 
-	while (true);
+	Game game;
 }

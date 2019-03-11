@@ -24,6 +24,9 @@
     <ClCompile Include="tick\TickManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="graphics\Window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -35,37 +38,40 @@
     <ClInclude Include="tick\TickCallback.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="util\math\vector\Vec.h">
+    <ClInclude Include="math\matrix\Mat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="util\math\matrix\Mat.h">
+    <ClInclude Include="math\matrix\MatOp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="util\math\vector\Vec2.h">
+    <ClInclude Include="math\matrix\MatTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="util\math\vector\Vec3.h">
+    <ClInclude Include="math\quaternion\Quat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="util\math\vector\Vec4.h">
+    <ClInclude Include="math\vector\Vec.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="util\math\Math.h">
+    <ClInclude Include="math\vector\Vec2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="util\math\quaternion\Quat.h">
+    <ClInclude Include="math\vector\Vec3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="util\math\matrix\MatOp.h">
+    <ClInclude Include="math\vector\Vec4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="util\math\matrix\MatTypes.h">
+    <ClInclude Include="math\vector\VecOp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="util\math\vector\VecOp.h">
+    <ClInclude Include="math\vector\VecTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="util\math\vector\VecTypes.h">
+    <ClInclude Include="math\Math.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
