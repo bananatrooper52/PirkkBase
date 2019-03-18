@@ -3,7 +3,7 @@
 #include <iostream>
 #include <chrono>
 
-using namespace PirkkBase;
+using namespace PirkkBase::Ticking;
 
 void TickManager::start() {
 	if (running) {

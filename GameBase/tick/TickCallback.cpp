@@ -1,6 +1,6 @@
 #include "TickCallback.h"
 
-using namespace PirkkBase;
+using namespace PirkkBase::Ticking;
 
 TickCallback::TickCallback(std::function<void(float)> _callback, float _cycleDuration) :
 	callback(_callback),

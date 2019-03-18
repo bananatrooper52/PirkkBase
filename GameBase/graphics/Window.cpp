@@ -1,41 +1,45 @@
 #include "Window.h"
 
-namespace PirkkBase {
-	Window::Window(Math::Vec2i size, std::string title) {
-		window = glfwCreateWindow(size.x, size.y, title.c_str(), 0, 0);
-	}
+using namespace PirkkBase::Graphics;
+using namespace PirkkBase::Math;
 
-	Window::~Window() {
-		glfwDestroyWindow(window);
-	}
+Window::Window(Vec2i size, std::string title) {
+	window = glfwCreateWindow(size.x, size.y, title.c_str(), 0, 0);
+	if (window == NULL) throw std::runtime_error("Failed to open window");
+}
 
-	void Window::swapBuffers() {
-		glfwSwapBuffers(window);
-	}
+Window::~Window() {
+	glfwDestroyWindow(window);
+}
 
-	void Window::makeContextCurrent() {
-		glfwMakeContextCurrent(window);
-	}
 
-	Math::Vec2i Window::getSize() {
-		Math::Vec2i size;
-		glfwGetWindowSize(window, &size.x, &size.y);
-		return size;
-	}
 
-	void Window::setSize(Math::Vec2i size) {
-		glfwSetWindowSize(window, size.x, size.y);
-	}
+void Window::swapBuffers() {
+	glfwSwapBuffers(window);
+}
 
-	void Window::setTitle(std::string title) {
-		glfwSetWindowTitle(window, title.c_str());
-	}
+void Window::makeContextCurrent() {
+	glfwMakeContextCurrent(window);
+}
 
-	bool Window::shouldClose() {
-		return glfwWindowShouldClose(window);
-	}
+Vec2i Window::getSize() {
+	Vec2i size;
+	glfwGetWindowSize(window, &size.x, &size.y);
+	return size;
+}
 
-	void Window::setShouldClose(bool shouldClose) {
-		glfwSetWindowShouldClose(window, shouldClose);
-	}
+void Window::setSize(Vec2i size) {
+	glfwSetWindowSize(window, size.x, size.y);
+}
+
+void Window::setTitle(std::string title) {
+	glfwSetWindowTitle(window, title.c_str());
+}
+
+bool Window::shouldClose() {
+	return glfwWindowShouldClose(window);
+}
+
+void Window::setShouldClose(bool shouldClose) {
+	glfwSetWindowShouldClose(window, shouldClose);
 }

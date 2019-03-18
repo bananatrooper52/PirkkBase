@@ -6,11 +6,9 @@
 namespace PirkkBase {
 	namespace Math {
 
-		const double PI = 3.14159265358979323846;
-
 		template<typename T>
 		T pi() {
-			return (T)PI;
+			return (T)3.14159265358979323846;
 		}
 
 		// Linear interpolate a value (scalar or vector)

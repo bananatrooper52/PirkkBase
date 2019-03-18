@@ -3,7 +3,9 @@
 #include "graphics/Window.h"
 #include "tick/TickManager.h"
 
-using namespace PirkkBase;
+using namespace PirkkBase::Graphics;
+using namespace PirkkBase::Math;
+using namespace PirkkBase::Ticking;
 
 class Game {
 private:

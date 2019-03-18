@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -20,12 +20,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="graphics\Mesh.cpp" />
+    <ClCompile Include="graphics\Shader.cpp" />
+    <ClCompile Include="graphics\VertexBuffer.cpp" />
     <ClCompile Include="graphics\Window.cpp" />
     <ClCompile Include="tick\TickCallback.cpp" />
     <ClCompile Include="tick\TickManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
+    <ClInclude Include="graphics\Mesh.h" />
+    <ClInclude Include="graphics\Shader.h" />
+    <ClInclude Include="graphics\VertexBuffer.h" />
     <ClInclude Include="graphics\Window.h" />
     <ClInclude Include="tick\TickCallback.h" />
     <ClInclude Include="tick\TickManager.h" />
@@ -40,6 +46,11 @@
     <ClInclude Include="math\vector\Vec4.h" />
     <ClInclude Include="math\vector\VecOp.h" />
     <ClInclude Include="math\vector\VecTypes.h" />
+    <ClInclude Include="util\FileLoader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\shaders\default\frag.glsl" />
+    <None Include="resources\shaders\default\vert.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
