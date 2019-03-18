@@ -1,4 +1,5 @@
 #include "VertexBuffer.h"
+#include <iostream>
 
 using namespace PirkkBase::Graphics;
 
@@ -14,7 +15,9 @@ VertexBuffer::VertexBuffer(GLenum usage, GLenum target) :
 	name(nullptr),
 	usage(usage),
 	target(target)
-{}
+{
+	glGenBuffers(1, &id);
+}
 
 VertexBuffer::VertexBuffer() :
 	name(nullptr),

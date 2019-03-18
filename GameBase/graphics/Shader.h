@@ -5,6 +5,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <map>
+#include <string>
 
 using namespace PirkkBase::Math;
 
@@ -31,6 +32,7 @@ namespace PirkkBase {
 			void bind();
 			GLint getUniformLocation(const char *name);
 			GLint getAttributeLocation(const char *name);
+			std::string getName();
 
 			void uniform1f(const char *name, float v);
 			void uniform2f(const char *name, Vec2f v);

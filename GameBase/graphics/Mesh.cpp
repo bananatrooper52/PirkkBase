@@ -2,21 +2,54 @@
 
 using namespace PirkkBase::Graphics;
 
-void Mesh::init() {
+Mesh::Mesh(Shader *shader) : shader(shader) {
 	glGenVertexArrays(1, &vao);
 }
 
-void Mesh::genBuffer(const char *name, GLenum target, GLenum usage, GLenum type, GLsizei elemSize, GLsizei dataSize, void *data) {
+void Mesh::genBuffer(const char *name, GLenum usage, GLsizei size, GLenum type, GLboolean normalized, GLsizei stride) {
 	bindVao();
-	GLuint buff = 0;
-	glGenBuffers(1, &buff);
-	glBufferData(target, dataSize, data, usage);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, elemSize, type, GL_FALSE, 0, NULL);
+
+	VertexBuffer buff(name, usage, GL_ARRAY_BUFFER);
+	buff.bind();
+
+	buffers[name] = buff;
+
+	// Find attribute location in shader
+	GLint attr = shader->getAttributeLocation(name);
+
+	// Warn if the attribute doesn't exist
+	if (attr == -1) {
+		std::cout << "Couldn't find attribute '" << name << "' [" << shader->getName() << "]" << std::endl;
+		return;
+	}
+
+	// Enable vertex attrib array
+	glEnableVertexAttribArray(attr);
+	glVertexAttribPointer(attr, size, type, normalized, stride, (void *)0);
+}
+
+void Mesh::bufferData(const char *name, const void *data, GLsizeiptr size) {
+	bindVao();
+	buffers[name].setData(data, size);
+}
+
+void Mesh::genElementBuffer(GLenum usage, GLenum type) {
+	bindVao();
+	VertexBuffer buff(usage, GL_ELEMENT_ARRAY_BUFFER);
+	elementBuffer = buff;
+}
+
+void Mesh::elementBufferData(const void *data, GLsizeiptr size, GLsizei elementCount) {
+	bindVao();
+	elementBuffer.setData(data, size);
+	this->elementCount = elementCount;
 }
 
 void Mesh::render() {
-	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, NULL);
+	bindVao();
+	shader->bind();
+	elementBuffer.bind();
+	glDrawElements(GL_TRIANGLES, elementCount, GL_UNSIGNED_SHORT, NULL);
 }
 
 void Mesh::bindVao() {

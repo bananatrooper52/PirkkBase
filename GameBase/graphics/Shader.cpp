@@ -72,11 +72,21 @@ GLint Shader::getUniformLocation(const char *name) {
 
 GLint Shader::getAttributeLocation(const char *name) {
 	std::map<const char *, GLint>::iterator it = attributeLocations.find(name);
+
+	// If the attribute isn't found, create it and return
 	if (it == attributeLocations.end()) {
-		GLint location = glGetUniformLocation(id, name);
-		return attributeLocations[name] = location;
+		GLint location = glGetAttribLocation(id, name);
+		attributeLocations[name] = location;
+		return location;
 	}
-	return attributeLocations[name];
+
+
+	// If it is found, return that
+	return it->second;
+}
+
+std::string Shader::getName() {
+	return name;
 }
 
 void Shader::uniform1f(const char *name, float v) { bind(); glUniform1f(getUniformLocation(name), v); }
