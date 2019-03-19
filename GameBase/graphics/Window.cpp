@@ -12,8 +12,6 @@ Window::~Window() {
 	glfwDestroyWindow(window);
 }
 
-
-
 void Window::swapBuffers() {
 	glfwSwapBuffers(window);
 }
@@ -30,6 +28,11 @@ Vec2i Window::getSize() {
 
 void Window::setSize(Vec2i size) {
 	glfwSetWindowSize(window, size.x, size.y);
+}
+
+float Window::aspectRatio() {
+	Vec2f size = Vec2f(getSize());
+	return size.x / size.y;
 }
 
 void Window::setTitle(std::string title) {

@@ -25,6 +25,7 @@ namespace PirkkBase {
 			void elementBufferData(const void *data, GLsizeiptr size, GLsizei elementCount);
 			void render();
 			void bindVao();
+			Shader *getShader();
 		};
 	}
 }

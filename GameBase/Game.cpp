@@ -11,11 +11,12 @@
 GLfloat data[] = {
 	-1, -1, 0,
 	1, -1, 0,
-	0, 1, 0
+	-1, 1, 0,
+	1, 1, 0
 };
 
 GLushort indices[] = {
-	0, 1, 2
+	0, 1, 2, 1, 3, 2
 };
 
 GLuint vao;
@@ -24,6 +25,11 @@ GLuint elem;
 
 Shader *shader;
 Mesh *mesh;
+
+Vec3f cameraPos(0);
+Mat4f cameraRot(1);
+
+float t;
 
 Game::Game() : window(Vec2i(1366, 768), "Game") {
 
@@ -35,9 +41,10 @@ Game::Game() : window(Vec2i(1366, 768), "Game") {
 
 	mesh = new Mesh(shader);
 	mesh->genElementBuffer(GL_STATIC_DRAW, GL_UNSIGNED_SHORT);
-	mesh->elementBufferData(indices, sizeof(indices), 3);
+	mesh->elementBufferData(indices, sizeof(indices), 6);
 	mesh->genBuffer("vertex", GL_STATIC_DRAW, 3, GL_FLOAT, GL_FALSE, 0);
 	mesh->bufferData("vertex", data, sizeof(data));
+	mesh->getShader()->uniform1f("aspect", window.aspectRatio());
 
 	tickManager.registerCallback("tick", new TickCallback([=](float delta) { tick(delta); }, 1.f / 60.f));
 	tickManager.registerCallback("render", new TickCallback([=](float delta) { render(); }, 1.f / 60.f));
@@ -48,15 +55,22 @@ Game::Game() : window(Vec2i(1366, 768), "Game") {
 
 void Game::tick(float delta) {
 	if (window.shouldClose()) tickManager.stop();
+
+	t += delta;
+	cameraPos.x = sin(t);
+
+	// TODO: y seems to affect z
+	cameraPos.y = cos(t);
 }
 
 void Game::render() {
-	shader->bind();
-	
+	shader->uniform3f("cameraPos", cameraPos);
+	shader->uniform4x4f("cameraRot", cameraRot);
+
 	mesh->render();
 
-	GLenum glerr = glGetError();
-	if (glerr) std::cout << "OpenGL Error " << glerr << ": " << gluErrorString(glerr) << std::endl;
+	// GLenum glerr = glGetError();
+	// if (glerr) std::cout << "OpenGL Error " << glerr << ": " << gluErrorString(glerr) << std::endl;
 
 	window.swapBuffers();
 	glfwPollEvents();

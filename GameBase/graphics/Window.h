@@ -25,6 +25,8 @@ namespace PirkkBase {
 			Math::Vec2i getSize();
 			void setSize(Math::Vec2i size);
 
+			float aspectRatio();
+
 			// Title setter
 			void setTitle(std::string title);
 

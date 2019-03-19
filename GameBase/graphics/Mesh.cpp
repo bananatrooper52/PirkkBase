@@ -55,3 +55,7 @@ void Mesh::render() {
 void Mesh::bindVao() {
 	glBindVertexArray(vao);
 }
+
+Shader *Mesh::getShader() {
+	return shader;
+}

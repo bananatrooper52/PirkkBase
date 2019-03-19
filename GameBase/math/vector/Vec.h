@@ -9,6 +9,7 @@ namespace PirkkBase {
 			T data[L];
 
 			Vec() { for (size_t i = 0; i < L; i++) data[i] = 0; }
+			template<typename U> explicit Vec(const Vec<U, L> &other) { for (size_t i = 0; i < L; i++) data[i] = other.data[i]; }
 			T &operator[](size_t i) { return data[i]; }
 			T operator[](size_t i) const { return data[i]; }
 		};

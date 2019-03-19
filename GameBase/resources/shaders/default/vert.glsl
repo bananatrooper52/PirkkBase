@@ -1,9 +1,12 @@
 #version 450
 
-layout(location = 0) in vec3 vertex;
-out vec3 fragVertex;
+uniform float aspect;
+
+in vec3 vertex;
+
+out vec2 screenPos;
 
 void main() {
     gl_Position = vec4(vertex, 1);
-    fragVertex = vertex;
+    screenPos = vec2(vertex.x * aspect, vertex.y);
 }
