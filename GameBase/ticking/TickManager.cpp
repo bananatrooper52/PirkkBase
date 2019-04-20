@@ -1,9 +1,9 @@
-#include "TickManager.h"
+#include "TickManager.hpp"
 
 #include <iostream>
 #include <chrono>
 
-using namespace PirkkBase::Ticking;
+using namespace Pirkk::Ticking;
 
 void TickManager::start() {
 	if (running) {

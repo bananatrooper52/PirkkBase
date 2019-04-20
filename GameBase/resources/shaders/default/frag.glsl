@@ -13,10 +13,25 @@ out vec4 color;
 // How many reflections are allowed
 const int iterationLimit = 3;
 
+struct CollisionInfo {
+    bool colliding;
+    vec3 position;
+    vec3 normal;
+};
+
 struct Ray {
     vec3 o;
     vec3 d;
 };
+
+struct Sphere {
+    vec3 c;
+    float r;
+};
+
+float rand(float co){
+    return fract(sin(co * 12.9898) * 43797.5453);
+}
 
 void swap(inout float a, inout float b) {
     float c = a;
@@ -24,54 +39,79 @@ void swap(inout float a, inout float b) {
     b = c;
 }
 
-bool intersectCube(Ray r, vec3 bmin, vec3 bmax) { 
-    float tmin = (bmin.x - r.o.x) / r.d.x; 
-    float tmax = (bmax.x - r.o.x) / r.d.x; 
- 
-    if (tmin > tmax) swap(tmin, tmax); 
- 
-    float tymin = (bmin.y - r.o.y) / r.d.y; 
-    float tymax = (bmax.y - r.o.y) / r.d.y; 
- 
-    if (tymin > tymax) swap(tymin, tymax); 
- 
-    if ((tmin > tymax) || (tymin > tmax)) 
-        return false; 
- 
-    if (tymin > tmin) 
-        tmin = tymin; 
- 
-    if (tymax < tmax) 
-        tmax = tymax; 
- 
-    float tzmin = (bmin.z - r.o.z) / r.d.z; 
-    float tzmax = (bmax.z - r.o.z) / r.d.z; 
- 
-    if (tzmin > tzmax) swap(tzmin, tzmax); 
- 
-    if ((tmin > tzmax) || (tzmin > tmax)) 
-        return false; 
- 
-    if (tzmin > tmin) 
-        tmin = tzmin; 
- 
-    if (tzmax < tmax) 
-        tmax = tzmax; 
- 
-    return true; 
-} 
+bool raySphere(Ray ray, Sphere sphere, inout CollisionInfo info) {
+    float t0, t1;
 
-vec4 castRay(Ray ray) {
-    vec4 color = vec4(0);
+    vec3 L = sphere.c - ray.o;
+    float tca = dot(L, ray.d);
+    if (tca < 0) return false;
+    float d2 = dot(L, L) - tca * tca;
+    float r2 = sphere.r * sphere.r;
+    if (d2 > r2) return false;
+    float thc = sqrt(r2 - d2);
+
+    t0 = tca - thc;
+    t1 = tca + thc;
+
+    if (t0 > t1) swap(t0, t1);
+    if (t0 < 0) {
+        t0 = t1;
+        if (t0 < 0) return false;
+    }
     
-    vec3 boxMin = vec3(-0.5, -0.5, -4);
-    vec3 boxMax = vec3(0.5, 0.5, -3);
+    info.position = ray.o + ray.d * t0;
+    info.normal = normalize(info.position - sphere.c);
 
-    if (intersectCube(ray, boxMin, boxMax)) return vec4(0.3, 0.4, 0.8, 1);
+    return true;
+}
 
-    return vec4(0);
+Sphere spheres[64];
+vec3 light = vec3(2, 2, 2);
+
+vec4 castRay(Ray r) {
+
+    Ray ray = r;
+    vec4 color = vec4(0.5, 0.6, 0.7, 1);
+    bool firstHit = true;
+    
+    for (int i = 0; i < iterationLimit; i++) {
+        CollisionInfo info;
+        bool hit = false;
+        float minDist = 0;
+        CollisionInfo minInfo;
+        int iout = 0;
+
+        for (int i = 0; i < 64; i++) {
+            if (raySphere(ray, spheres[i], info)) {
+                float dist = dot(info.position - ray.o, info.position - ray.o);
+                if (!hit || dist < minDist) {
+                    minDist = dist;
+                    minInfo = info;
+                    hit = true;
+                    iout = i;
+                }
+            }
+        }
+
+        if (!hit) break;
+        
+        vec3 lightDir = normalize(light - info.position);
+        float cosTheta = clamp(dot(minInfo.normal, lightDir) * 6, 0, 1);
+        color = mix(color, vec4(vec3(rand(iout * 3), rand(iout * 3 + 1), rand(iout * 3 + 2)), 1), firstHit ? 1 : 0.1) * cosTheta;
+        firstHit = false;
+        ray.o = minInfo.position;
+        ray.d = reflect(ray.d, minInfo.normal);
+    }
+
+    return color;
 }
 
 void main() {
-    color = castRay(Ray(cameraPos, (cameraRot * normalize(vec4(screenPos, -1, 1))).xyz));
+    for (int i = 0; i < 64; i++) {
+        spheres[i] = Sphere(vec3(i % 4, int(floor(i) / 4) % 4, floor(floor(i) / 4) / 4), 0.4);
+    }
+
+    Ray r = Ray(cameraPos, normalize((cameraRot * normalize(vec4(screenPos, -2, 1))).xyz));
+
+    color = castRay(r);
 }

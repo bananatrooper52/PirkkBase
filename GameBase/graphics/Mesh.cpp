@@ -1,6 +1,6 @@
-#include "Mesh.h"
+#include "Mesh.hpp"
 
-using namespace PirkkBase::Graphics;
+using namespace Pirkk::Graphics;
 
 Mesh::Mesh(Shader *shader) : shader(shader) {
 	glGenVertexArrays(1, &vao);

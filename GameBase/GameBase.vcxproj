@@ -24,29 +24,29 @@
     <ClCompile Include="graphics\Shader.cpp" />
     <ClCompile Include="graphics\VertexBuffer.cpp" />
     <ClCompile Include="graphics\Window.cpp" />
-    <ClCompile Include="tick\TickCallback.cpp" />
-    <ClCompile Include="tick\TickManager.cpp" />
+    <ClCompile Include="ticking\TickCallback.cpp" />
+    <ClCompile Include="ticking\TickManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="graphics\Mesh.h" />
-    <ClInclude Include="graphics\Shader.h" />
-    <ClInclude Include="graphics\VertexBuffer.h" />
-    <ClInclude Include="graphics\Window.h" />
-    <ClInclude Include="tick\TickCallback.h" />
-    <ClInclude Include="tick\TickManager.h" />
-    <ClInclude Include="math\Math.h" />
-    <ClInclude Include="math\matrix\Mat.h" />
-    <ClInclude Include="math\matrix\MatOp.h" />
-    <ClInclude Include="math\matrix\MatTypes.h" />
-    <ClInclude Include="math\quaternion\Quat.h" />
-    <ClInclude Include="math\vector\Vec.h" />
-    <ClInclude Include="math\vector\Vec2.h" />
-    <ClInclude Include="math\vector\Vec3.h" />
-    <ClInclude Include="math\vector\Vec4.h" />
-    <ClInclude Include="math\vector\VecOp.h" />
-    <ClInclude Include="math\vector\VecTypes.h" />
-    <ClInclude Include="util\FileLoader.h" />
+    <ClInclude Include="Game.hpp" />
+    <ClInclude Include="graphics\Mesh.hpp" />
+    <ClInclude Include="graphics\Shader.hpp" />
+    <ClInclude Include="graphics\VertexBuffer.hpp" />
+    <ClInclude Include="graphics\Window.hpp" />
+    <ClInclude Include="ticking\TickCallback.hpp" />
+    <ClInclude Include="ticking\TickManager.hpp" />
+    <ClInclude Include="math\Math.hpp" />
+    <ClInclude Include="math\matrix\Mat.hpp" />
+    <ClInclude Include="math\matrix\MatOp.hpp" />
+    <ClInclude Include="math\matrix\MatTypes.hpp" />
+    <ClInclude Include="math\quaternion\Quat.hpp" />
+    <ClInclude Include="math\vector\Vec.hpp" />
+    <ClInclude Include="math\vector\Vec2.hpp" />
+    <ClInclude Include="math\vector\Vec3.hpp" />
+    <ClInclude Include="math\vector\Vec4.hpp" />
+    <ClInclude Include="math\vector\VecOp.hpp" />
+    <ClInclude Include="math\vector\VecTypes.hpp" />
+    <ClInclude Include="util\FileLoader.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\default\frag.glsl" />
@@ -56,33 +56,33 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{5D424585-0F7E-4C45-8AE0-7CFE83818C72}</ProjectGuid>
     <RootNamespace>GameBase</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>PirkkBase</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -120,6 +120,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessToFile>false</PreprocessToFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

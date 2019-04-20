@@ -18,12 +18,6 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tick\TickCallback.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tick\TickManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="graphics\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -36,63 +30,69 @@
     <ClCompile Include="graphics\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ticking\TickCallback.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ticking\TickManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h">
+    <ClInclude Include="math\vector\Vec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tick\TickManager.h">
+    <ClInclude Include="math\vector\Vec2.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tick\TickCallback.h">
+    <ClInclude Include="math\vector\Vec3.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="math\matrix\Mat.h">
+    <ClInclude Include="math\vector\Vec4.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="math\matrix\MatOp.h">
+    <ClInclude Include="math\vector\VecOp.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="math\matrix\MatTypes.h">
+    <ClInclude Include="math\quaternion\Quat.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="math\quaternion\Quat.h">
+    <ClInclude Include="math\matrix\MatTypes.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="math\vector\Vec.h">
+    <ClInclude Include="math\matrix\MatOp.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="math\vector\Vec2.h">
+    <ClInclude Include="math\matrix\Mat.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="math\vector\Vec3.h">
+    <ClInclude Include="graphics\Window.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="math\vector\Vec4.h">
+    <ClInclude Include="graphics\VertexBuffer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="math\vector\VecOp.h">
+    <ClInclude Include="graphics\Shader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="math\vector\VecTypes.h">
+    <ClInclude Include="graphics\Mesh.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="math\Math.h">
+    <ClInclude Include="math\vector\VecTypes.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\Window.h">
+    <ClInclude Include="util\FileLoader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\Mesh.h">
+    <ClInclude Include="math\Math.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\VertexBuffer.h">
+    <ClInclude Include="ticking\TickCallback.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\Shader.h">
+    <ClInclude Include="ticking\TickManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="util\FileLoader.h">
+    <ClInclude Include="Game.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

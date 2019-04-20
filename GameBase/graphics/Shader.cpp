@@ -1,7 +1,7 @@
-#include "Shader.h"
-#include "../util/FileLoader.h"
+#include "Shader.hpp"
+#include "../util/FileLoader.hpp"
 
-using namespace PirkkBase::Graphics;
+using namespace Pirkk::Graphics;
 
 Shader::Shader(std::string name) : name(name) {
 	compileProgram();
@@ -89,13 +89,17 @@ std::string Shader::getName() {
 	return name;
 }
 
+void Shader::reload() {
+	compileProgram();
+}
+
 void Shader::uniform1f(const char *name, float v) { bind(); glUniform1f(getUniformLocation(name), v); }
 void Shader::uniform2f(const char *name, Vec2f v) { bind(); glUniform2f(getUniformLocation(name), v.x, v.y); }
-void Shader::uniform3f(const char *name, Vec3f v) { bind(); glUniform3f(getUniformLocation(name), v.x, v.y, v.y); }
+void Shader::uniform3f(const char *name, Vec3f v) { bind(); glUniform3f(getUniformLocation(name), v.x, v.y, v.z); }
 void Shader::uniform4f(const char *name, Vec4f v) { bind(); glUniform4f(getUniformLocation(name), v.x, v.y, v.z, v.w); }
 void Shader::uniform1i(const char *name, int v) { bind(); glUniform1i(getUniformLocation(name), v); }
 void Shader::uniform2i(const char *name, Vec2i v) { bind(); glUniform2i(getUniformLocation(name), v.x, v.y); }
-void Shader::uniform3i(const char *name, Vec3i v) { bind(); glUniform3i(getUniformLocation(name), v.x, v.y, v.y); }
+void Shader::uniform3i(const char *name, Vec3i v) { bind(); glUniform3i(getUniformLocation(name), v.x, v.y, v.z); }
 void Shader::uniform4i(const char *name, Vec4i v) { bind(); glUniform4i(getUniformLocation(name), v.x, v.y, v.z, v.w); }
 void Shader::uniform3x3f(const char *name, Mat3f v, bool transpose) { glUniformMatrix3fv(getUniformLocation(name), 1, transpose, &v[0][0]); }
 void Shader::uniform4x4f(const char *name, Mat4f v, bool transpose) { glUniformMatrix4fv(getUniformLocation(name), 1, transpose, &v[0][0]); }

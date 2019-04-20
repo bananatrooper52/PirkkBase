@@ -1,13 +1,12 @@
 #pragma once
 
-#include "Vec.h"
+#include "Vec.hpp"
 
-namespace PirkkBase {
-	namespace Math {
+namespace Pirkk::Math {
 
-		// UNARY OPERATORS //
+	// UNARY OPERATORS //
 
-		// General unary
+	// General unary
 #define PIRKK_VEC_OP_UN(op)								\
 template<typename T, size_t L>							\
 Vec<T, L> operator##op(const Vec<T, L> &a) {			\
@@ -16,11 +15,11 @@ Vec<T, L> operator##op(const Vec<T, L> &a) {			\
 	return out;											\
 }
 
-		PIRKK_VEC_OP_UN(+);
-		PIRKK_VEC_OP_UN(-);
-		PIRKK_VEC_OP_UN(~);
+	PIRKK_VEC_OP_UN(+);
+	PIRKK_VEC_OP_UN(-);
+	PIRKK_VEC_OP_UN(~);
 
-		// Increment and decrement prefix
+	// Increment and decrement prefix
 #define PIRKK_VEC_OP_INC_DEC_PREFIX(op)			\
 template<typename T, size_t L>					\
 Vec<T, L> &operator##op(Vec<T, L> &a) {			\
@@ -40,12 +39,12 @@ Vec<T, L> operator##op(Vec<T, L> &a, int) {		\
 		// Increment and decrement postfix and prefix
 #define PIRKK_VEC_OP_INC_DEC(op) PIRKK_VEC_OP_INC_DEC_PREFIX(op) PIRKK_VEC_OP_INC_DEC_POSTFIX(op)
 
-		PIRKK_VEC_OP_INC_DEC(++);
-		PIRKK_VEC_OP_INC_DEC(--);
+	PIRKK_VEC_OP_INC_DEC(++);
+	PIRKK_VEC_OP_INC_DEC(--);
 
-		// BINARY OPERATORS //
+	// BINARY OPERATORS //
 
-		// Vec op Vec
+	// Vec op Vec
 #define PIRKK_VEC_OP_BIN_VEC_VEC(op)								\
 template<typename T, size_t L>										\
 Vec<T, L> operator##op(const Vec<T, L> &a, const Vec<T, L> &b) {	\
@@ -75,20 +74,20 @@ Vec<T, L> operator##op(T a, const Vec<T, L> &b) {		\
 		// All binary functions
 #define PIRKK_VEC_OP_BIN(op) PIRKK_VEC_OP_BIN_VEC_VEC(op) PIRKK_VEC_OP_BIN_VEC_SCALAR(op) PIRKK_VEC_OP_BIN_SCALAR_VEC(op)
 
-		PIRKK_VEC_OP_BIN(+);
-		PIRKK_VEC_OP_BIN(-);
-		PIRKK_VEC_OP_BIN(*);
-		PIRKK_VEC_OP_BIN(/ );
-		PIRKK_VEC_OP_BIN(%);
-		PIRKK_VEC_OP_BIN(&);
-		PIRKK_VEC_OP_BIN(| );
-		PIRKK_VEC_OP_BIN(<< );
-		PIRKK_VEC_OP_BIN(>> );
-		PIRKK_VEC_OP_BIN(^);
+	PIRKK_VEC_OP_BIN(+);
+	PIRKK_VEC_OP_BIN(-);
+	PIRKK_VEC_OP_BIN(*);
+	PIRKK_VEC_OP_BIN(/ );
+	PIRKK_VEC_OP_BIN(%);
+	PIRKK_VEC_OP_BIN(&);
+	PIRKK_VEC_OP_BIN(| );
+	PIRKK_VEC_OP_BIN(<< );
+	PIRKK_VEC_OP_BIN(>> );
+	PIRKK_VEC_OP_BIN(^);
 
-		// ASSIGNMENT OPERATORS //
+	// ASSIGNMENT OPERATORS //
 
-		// Vec op Vec
+	// Vec op Vec
 #define PIRKK_VEC_OP_ASSIGN_VEC_VEC(op)							\
 template<typename T, size_t L>									\
 Vec<T, L> operator##op##=(Vec<T, L> &a, const Vec<T, L> &b) {	\
@@ -107,15 +106,14 @@ Vec<T, L> operator##op##=(Vec<T, L> &a, T b) {	\
 		// All assignment functions
 #define PIRKK_VEC_OP_ASSIGN(op) PIRKK_VEC_OP_ASSIGN_VEC_VEC(op) PIRKK_VEC_OP_ASSIGN_VEC_SCALAR(op)
 
-		PIRKK_VEC_OP_ASSIGN(+);
-		PIRKK_VEC_OP_ASSIGN(-);
-		PIRKK_VEC_OP_ASSIGN(*);
-		PIRKK_VEC_OP_ASSIGN(/ );
-		PIRKK_VEC_OP_ASSIGN(%);
-		PIRKK_VEC_OP_ASSIGN(&);
-		PIRKK_VEC_OP_ASSIGN(| );
-		PIRKK_VEC_OP_ASSIGN(<< );
-		PIRKK_VEC_OP_ASSIGN(>> );
-		PIRKK_VEC_OP_ASSIGN(^);
-	}
+	PIRKK_VEC_OP_ASSIGN(+);
+	PIRKK_VEC_OP_ASSIGN(-);
+	PIRKK_VEC_OP_ASSIGN(*);
+	PIRKK_VEC_OP_ASSIGN(/ );
+	PIRKK_VEC_OP_ASSIGN(%);
+	PIRKK_VEC_OP_ASSIGN(&);
+	PIRKK_VEC_OP_ASSIGN(| );
+	PIRKK_VEC_OP_ASSIGN(<< );
+	PIRKK_VEC_OP_ASSIGN(>> );
+	PIRKK_VEC_OP_ASSIGN(^);
 }

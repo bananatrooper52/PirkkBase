@@ -1,12 +1,12 @@
 #include <iostream>
 
-#include "Game.h"
-#include "tick/TickManager.h"
-#include "math/Math.h"
+#include "Game.hpp"
+#include "ticking/TickManager.hpp"
+#include "math/Math.hpp"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "graphics/Shader.h"
-#include "graphics/Mesh.h"
+#include "graphics/Shader.hpp"
+#include "graphics/Mesh.hpp"
 
 GLfloat data[] = {
 	-1, -1, 0,
@@ -31,6 +31,8 @@ Mat4f cameraRot(1);
 
 float t;
 
+Vec3f position;
+
 Game::Game() : window(Vec2i(1366, 768), "Game") {
 
 	window.makeContextCurrent();
@@ -46,9 +48,12 @@ Game::Game() : window(Vec2i(1366, 768), "Game") {
 	mesh->bufferData("vertex", data, sizeof(data));
 	mesh->getShader()->uniform1f("aspect", window.aspectRatio());
 
-	tickManager.registerCallback("tick", new TickCallback([=](float delta) { tick(delta); }, 1.f / 60.f));
-	tickManager.registerCallback("render", new TickCallback([=](float delta) { render(); }, 1.f / 60.f));
+	tickManager.registerCallback("tick", new TickCallback([&](float delta) { tick(delta); }, 1.f / 60.f));
+	tickManager.registerCallback("render", new TickCallback([&](float delta) { render(); }, 1.f / 60.f));
 	tickManager.start();
+
+	delete shader;
+	delete mesh;
 
 	glfwTerminate();
 }
@@ -56,11 +61,23 @@ Game::Game() : window(Vec2i(1366, 768), "Game") {
 void Game::tick(float delta) {
 	if (window.shouldClose()) tickManager.stop();
 
+	if (window.getKey(GLFW_KEY_W)) cameraPos.z -= delta;
+	if (window.getKey(GLFW_KEY_S)) cameraPos.z += delta;
+	if (window.getKey(GLFW_KEY_A)) cameraPos.x -= delta;
+	if (window.getKey(GLFW_KEY_D)) cameraPos.x += delta;
+	if (window.getKey(GLFW_KEY_LEFT_SHIFT)) cameraPos.y -= delta;
+	if (window.getKey(GLFW_KEY_SPACE)) cameraPos.y += delta;
+
+	if (window.getKey(GLFW_KEY_R)) {
+		shader->reload();
+		mesh->getShader()->uniform1f("aspect", window.aspectRatio());
+	}
+
 	t += delta;
-	cameraPos.x = sin(t);
+	//cameraPos.x = sin(t);
 
 	// TODO: y seems to affect z
-	cameraPos.y = cos(t);
+	//cameraPos.y = cos(t);
 }
 
 void Game::render() {

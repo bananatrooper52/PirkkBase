@@ -1,7 +1,7 @@
-#include "Window.h"
+#include "Window.hpp"
 
-using namespace PirkkBase::Graphics;
-using namespace PirkkBase::Math;
+using namespace Pirkk::Graphics;
+using namespace Pirkk::Math;
 
 Window::Window(Vec2i size, std::string title) {
 	window = glfwCreateWindow(size.x, size.y, title.c_str(), 0, 0);
@@ -45,4 +45,14 @@ bool Window::shouldClose() {
 
 void Window::setShouldClose(bool shouldClose) {
 	glfwSetWindowShouldClose(window, shouldClose);
+}
+
+bool Window::getKey(int key) {
+	return glfwGetKey(window, key);
+}
+
+Vec2f Window::getMousePos() {
+	Math::Vec2d pos;
+	glfwGetCursorPos(window, &pos.x, &pos.y);
+	return Vec2f(pos);
 }
