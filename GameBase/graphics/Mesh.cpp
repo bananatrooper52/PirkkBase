@@ -45,11 +45,15 @@ void Mesh::elementBufferData(const void *data, GLsizeiptr size, GLsizei elementC
 	this->elementCount = elementCount;
 }
 
-void Mesh::render() {
+void Mesh::drawElements(GLenum mode, GLenum type, const void* indices) {
 	bindVao();
 	shader->bind();
 	elementBuffer.bind();
-	glDrawElements(GL_TRIANGLES, elementCount, GL_UNSIGNED_SHORT, NULL);
+	glDrawElements(mode, elementCount, type, indices);
+}
+
+void Mesh::render() {
+	drawElements(GL_TRIANGLES, GL_UNSIGNED_SHORT);
 }
 
 void Mesh::bindVao() {

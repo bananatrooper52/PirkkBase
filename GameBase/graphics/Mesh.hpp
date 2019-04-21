@@ -9,12 +9,12 @@
 
 namespace Pirkk::Graphics {
 	class Mesh {
-	private:
+	protected:
 		GLuint vao;
 		VertexBuffer elementBuffer;
+		GLsizei elementCount;
 		std::map<const char *, VertexBuffer> buffers;
 		Shader *shader;
-		GLsizei elementCount;
 
 	public:
 		Mesh(Shader *shader);
@@ -22,7 +22,8 @@ namespace Pirkk::Graphics {
 		void bufferData(const char *name, const void *data, GLsizeiptr size);
 		void genElementBuffer(GLenum usage, GLenum type);
 		void elementBufferData(const void *data, GLsizeiptr size, GLsizei elementCount);
-		void render();
+		void drawElements(GLenum mode, GLenum type, const void *indices = NULL);
+		virtual void render();
 		void bindVao();
 		Shader *getShader();
 	};

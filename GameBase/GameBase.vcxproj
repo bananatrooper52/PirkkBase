@@ -30,6 +30,7 @@
   <ItemGroup>
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="graphics\Mesh.hpp" />
+    <ClInclude Include="graphics\raytracing\Scene.hpp" />
     <ClInclude Include="graphics\Shader.hpp" />
     <ClInclude Include="graphics\VertexBuffer.hpp" />
     <ClInclude Include="graphics\Window.hpp" />
@@ -47,6 +48,9 @@
     <ClInclude Include="math\vector\VecOp.hpp" />
     <ClInclude Include="math\vector\VecTypes.hpp" />
     <ClInclude Include="util\FileLoader.hpp" />
+    <ClInclude Include="util\registry\Registry.hpp" />
+    <ClInclude Include="util\registry\RegistryHandler.hpp" />
+    <ClInclude Include="util\registry\RegistryKey.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\default\frag.glsl" />
