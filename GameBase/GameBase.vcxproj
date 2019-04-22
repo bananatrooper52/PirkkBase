@@ -30,6 +30,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.hpp" />
+    <ClInclude Include="graphics\Image.hpp" />
     <ClInclude Include="graphics\mesh\Mesh.hpp" />
     <ClInclude Include="graphics\mesh\ScreenCoverMesh.hpp" />
     <ClInclude Include="graphics\raytracing\Scene.hpp" />
@@ -55,8 +56,8 @@
     <ClInclude Include="util\registry\RegistryKey.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="resources\shaders\default\frag.glsl" />
-    <None Include="resources\shaders\default\vert.glsl" />
+    <None Include="resources\shaders\screenCover\frag.glsl" />
+    <None Include="resources\shaders\screenCover\vert.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

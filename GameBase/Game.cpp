@@ -31,6 +31,8 @@ Game::Game() {
 
 	addRegistries();
 
+	shader->setTexture2D("tex", Image(Vec2ui(2, 2), std::vector<unsigned char> { 0, 0, 0, 255, 255, 0, 255, 255, 255, 0, 255, 255, 0, 0, 0, 255 }));
+
 	tickManager.registerCallback("tick", new TickCallback([&](float delta) { tick(delta); }, 1.f / 60.f));
 	tickManager.registerCallback("render", new TickCallback([&](float delta) { render(); }, 1.f / 60.f));
 	tickManager.start();
@@ -45,8 +47,8 @@ void Game::addRegistries() {
 	if (glewInit() != GLEW_OK) throw std::runtime_error("Failed to initialize GLEW"); // Initialize GLEW after window context is ready
 
 	std::shared_ptr<Registry<Shader>> shaderRegistry = RegistryHandler::addRegistry<Shader>();
-	shader = Shader::loadShader("default");
-	shaderRegistry->registerEntry("default", shader);
+	shader = Shader::loadShader("screenCover");
+	shaderRegistry->registerEntry("screenCover", shader);
 
 	std::shared_ptr<Registry<Mesh>> meshRegistry = RegistryHandler::addRegistry<Mesh>();
 	screenMesh = std::shared_ptr<Mesh>(new ScreenCoverMesh());
@@ -55,26 +57,22 @@ void Game::addRegistries() {
 
 void Game::tick(float delta) {
 	if (window->shouldClose()) tickManager.stop();
-			  
+
 	if (window->getKey(GLFW_KEY_W)) cameraPos.z -= delta;
 	if (window->getKey(GLFW_KEY_S)) cameraPos.z += delta;
 	if (window->getKey(GLFW_KEY_A)) cameraPos.x -= delta;
 	if (window->getKey(GLFW_KEY_D)) cameraPos.x += delta;
 	if (window->getKey(GLFW_KEY_LEFT_SHIFT)) cameraPos.y -= delta;
 	if (window->getKey(GLFW_KEY_SPACE)) cameraPos.y += delta;
-			  
+
 	if (window->getKey(GLFW_KEY_R)) {
 		shader->reload();
-		screenMesh->getShader()->uniform1f("aspect", window->aspectRatio());
 	}
 
 	t += delta;
 }
 
 void Game::render() {
-	shader->uniform3f("cameraPos", cameraPos);
-	shader->uniform4x4f("cameraRot", cameraRot);
-
 	screenMesh->render();
 
 	window->swapBuffers();

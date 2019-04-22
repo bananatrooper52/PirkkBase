@@ -113,9 +113,12 @@
     <ClInclude Include="graphics\mesh\ScreenCoverMesh.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="graphics\Image.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="resources\shaders\default\vert.glsl" />
-    <None Include="resources\shaders\default\frag.glsl" />
+    <None Include="resources\shaders\screenCover\frag.glsl" />
+    <None Include="resources\shaders\screenCover\vert.glsl" />
   </ItemGroup>
 </Project>
