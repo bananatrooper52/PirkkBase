@@ -2,7 +2,7 @@
 
 #include "Vec.hpp"
 
-namespace Pirkk::Math {
+namespace pirkk::math {
 	template<typename T>
 	struct Vec<T, 3> {
 		union {

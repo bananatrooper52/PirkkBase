@@ -1,8 +1,9 @@
 #include "Mesh.hpp"
 
-using namespace Pirkk::Graphics;
+using namespace pirkk::graphics;
+using namespace pirkk::graphics::mesh;
 
-Mesh::Mesh(Shader *shader) : shader(shader) {
+Mesh::Mesh(std::shared_ptr<Shader> shader) : shader(shader), elementCount(0) {
 	glGenVertexArrays(1, &vao);
 }
 
@@ -60,6 +61,6 @@ void Mesh::bindVao() {
 	glBindVertexArray(vao);
 }
 
-Shader *Mesh::getShader() {
+std::shared_ptr<Shader> Mesh::getShader() {
 	return shader;
 }

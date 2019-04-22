@@ -1,23 +1,25 @@
 #pragma once
 
+#include "../VertexBuffer.hpp"
+#include "../Shader.hpp"
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <map>
 #include <vector>
-#include "VertexBuffer.hpp"
-#include "Shader.hpp"
+#include <memory>
 
-namespace Pirkk::Graphics {
+namespace pirkk::graphics::mesh {
 	class Mesh {
 	protected:
 		GLuint vao;
 		VertexBuffer elementBuffer;
 		GLsizei elementCount;
 		std::map<const char *, VertexBuffer> buffers;
-		Shader *shader;
+		std::shared_ptr<Shader> shader;
 
 	public:
-		Mesh(Shader *shader);
+		Mesh(std::shared_ptr<Shader> shader);
 		void genBuffer(const char *name, GLenum usage, GLsizei size, GLenum type, GLboolean normalized, GLsizei stride);
 		void bufferData(const char *name, const void *data, GLsizeiptr size);
 		void genElementBuffer(GLenum usage, GLenum type);
@@ -25,6 +27,6 @@ namespace Pirkk::Graphics {
 		void drawElements(GLenum mode, GLenum type, const void *indices = NULL);
 		virtual void render();
 		void bindVao();
-		Shader *getShader();
+		std::shared_ptr<Shader> getShader();
 	};
 }

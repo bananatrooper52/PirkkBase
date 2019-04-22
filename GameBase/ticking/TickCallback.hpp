@@ -2,7 +2,7 @@
 
 #include <functional>
 
-namespace Pirkk::Ticking {
+namespace pirkk::ticking {
 	class TickCallback {
 	private:
 		// Callback function to call each tick cycle

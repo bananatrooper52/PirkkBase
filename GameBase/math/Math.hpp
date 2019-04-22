@@ -3,7 +3,7 @@
 #include "vector/Vec.hpp"
 #include "matrix/Mat.hpp"
 
-namespace Pirkk::Math {
+namespace pirkk::math {
 
 	template<typename T>
 	T pi() {

@@ -7,9 +7,9 @@
 #include <map>
 #include <string>
 
-using namespace Pirkk::Math;
+using namespace pirkk::math;
 
-namespace Pirkk::Graphics {
+namespace pirkk::graphics {
 	class Shader {
 	private:
 		std::string name;
@@ -26,6 +26,8 @@ namespace Pirkk::Graphics {
 		void compileProgram();
 
 	public:
+		static std::shared_ptr<Shader> loadShader(std::string name);
+
 		Shader(std::string name);
 
 		void bind();

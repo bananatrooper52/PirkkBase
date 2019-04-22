@@ -1,7 +1,7 @@
 #include "VertexBuffer.hpp"
 #include <iostream>
 
-using namespace Pirkk::Graphics;
+using namespace pirkk::graphics;
 
 VertexBuffer::VertexBuffer(const char *name, GLenum usage, GLenum target) :
 	name(name),

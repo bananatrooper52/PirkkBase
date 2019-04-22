@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-namespace Pirkk::Math {
+namespace pirkk::math {
 	template<typename T, size_t L>
 	struct Vec {
 		T data[L];

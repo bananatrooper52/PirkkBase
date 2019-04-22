@@ -1,11 +1,15 @@
 #include "Shader.hpp"
 #include "../util/FileLoader.hpp"
 
-using namespace Pirkk::Graphics;
+using namespace pirkk::graphics;
 
-Shader::Shader(std::string name) : name(name) {
-	compileProgram();
+std::shared_ptr<Shader> Shader::loadShader(std::string name) {
+	std::shared_ptr<Shader> shader = std::make_shared<Shader>(name);
+	shader->compileProgram();
+	return shader;
 }
+
+Shader::Shader(std::string name) : name(name), id(0) {}
 
 GLuint Shader::loadShaderSource(std::string src, GLenum type) {
 	GLuint shaderId = glCreateShader(type);
@@ -29,13 +33,13 @@ void Shader::verifyProgram() {
 		GLchar *msg = new GLchar[logLen];
 		glGetProgramInfoLog(id, logLen, 0, msg);
 		std::cout << msg << std::endl;
-		delete msg;
+		delete[] msg;
 	}
 }
 
 void Shader::compileProgram() {
-	std::string vertSrc = Util::loadFile("resources/shaders/" + name + "/vert.glsl");
-	std::string fragSrc = Util::loadFile("resources/shaders/" + name + "/frag.glsl");
+	std::string vertSrc = util::loadFile("resources/shaders/" + name + "/vert.glsl");
+	std::string fragSrc = util::loadFile("resources/shaders/" + name + "/frag.glsl");
 
 	const GLchar *vertSrcPtr = vertSrc.c_str();
 	const GLchar *fragSrcPtr = fragSrc.c_str();

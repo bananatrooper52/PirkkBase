@@ -2,7 +2,7 @@
 
 #include "Mat.hpp"
 
-namespace Pirkk::Math {
+namespace pirkk::math {
 	// UNARY OPERATORS //
 
 	// General unary

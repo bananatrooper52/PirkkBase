@@ -2,7 +2,7 @@
 
 #include "Mat.hpp"
 
-namespace Pirkk::Math {
+namespace pirkk::math {
 
 #define PIRKK_MAT_USING_ALL_TYPES(w, h)					\
 template<typename T> using Mat##w##x##h = Mat<T, w, h>;	\

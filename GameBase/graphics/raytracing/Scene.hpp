@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../Mesh.hpp"
+#include "../mesh/Mesh.hpp"
 
-using namespace Pirkk::Graphics;
+using namespace pirkk::graphics;
 
-namespace Pirkk::Graphics::RayTracing {
+namespace pirkk::graphics::RayTracing {
 	class Scene {
 	private:
 		class ScreenMesh : public Mesh {

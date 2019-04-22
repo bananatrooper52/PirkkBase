@@ -1,7 +1,7 @@
 #include "Window.hpp"
 
-using namespace Pirkk::Graphics;
-using namespace Pirkk::Math;
+using namespace pirkk::graphics;
+using namespace pirkk::math;
 
 Window::Window(Vec2i size, std::string title) {
 	window = glfwCreateWindow(size.x, size.y, title.c_str(), 0, 0);
@@ -16,8 +16,9 @@ void Window::swapBuffers() {
 	glfwSwapBuffers(window);
 }
 
-void Window::makeContextCurrent() {
+Window *Window::makeContextCurrent() {
 	glfwMakeContextCurrent(window);
+	return this;
 }
 
 Vec2i Window::getSize() {
@@ -52,7 +53,7 @@ bool Window::getKey(int key) {
 }
 
 Vec2f Window::getMousePos() {
-	Math::Vec2d pos;
+	math::Vec2d pos;
 	glfwGetCursorPos(window, &pos.x, &pos.y);
 	return Vec2f(pos);
 }

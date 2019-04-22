@@ -20,16 +20,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="graphics\Mesh.cpp" />
+    <ClCompile Include="graphics\mesh\Mesh.cpp" />
     <ClCompile Include="graphics\Shader.cpp" />
     <ClCompile Include="graphics\VertexBuffer.cpp" />
     <ClCompile Include="graphics\Window.cpp" />
     <ClCompile Include="ticking\TickCallback.cpp" />
     <ClCompile Include="ticking\TickManager.cpp" />
+    <ClCompile Include="util\registry\RegistryHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.hpp" />
-    <ClInclude Include="graphics\Mesh.hpp" />
+    <ClInclude Include="graphics\mesh\Mesh.hpp" />
+    <ClInclude Include="graphics\mesh\ScreenCoverMesh.hpp" />
     <ClInclude Include="graphics\raytracing\Scene.hpp" />
     <ClInclude Include="graphics\Shader.hpp" />
     <ClInclude Include="graphics\VertexBuffer.hpp" />

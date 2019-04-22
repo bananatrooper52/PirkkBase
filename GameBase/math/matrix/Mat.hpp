@@ -4,7 +4,7 @@
 #include <iostream>
 #include <type_traits>
 
-namespace Pirkk::Math {
+namespace pirkk::math {
 	template<typename T, size_t W, size_t H>
 	struct Mat {
 		Vec<T, H> data[W]; // Columns

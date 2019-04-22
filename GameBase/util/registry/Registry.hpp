@@ -6,7 +6,7 @@
 #include <memory>
 #include <iostream>
 
-namespace Pirkk::Util::Registry {
+namespace pirkk::util::registry {
 
 	template<typename T>
 	class Registry {

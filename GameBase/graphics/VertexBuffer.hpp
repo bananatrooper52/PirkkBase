@@ -3,7 +3,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-namespace Pirkk::Graphics {
+namespace pirkk::graphics {
 	class VertexBuffer {
 	private:
 		// The id of the buffer object

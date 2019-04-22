@@ -3,7 +3,7 @@
 #include <fstream>
 #include <string>
 
-namespace Pirkk::Util {
+namespace pirkk::util {
 	inline std::string loadFile(std::string location) {
 		std::ifstream file;
 		std::string output;

@@ -2,27 +2,28 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+
 #include "../math/Math.hpp"
 
-namespace Pirkk::Graphics {
+namespace pirkk::graphics {
 	class Window {
 	private:
 		// Internal GLFW window object
 		GLFWwindow* window;
 
 	public:
-		Window(Math::Vec2i size, std::string title);
+		Window(math::Vec2i size, std::string title);
 		~Window();
 
 		// Swap buffers
 		void swapBuffers();
 
 		// Set window as current OpenGL rendering context
-		void makeContextCurrent();
+		Window *makeContextCurrent();
 
 		// Size getter and setter
-		Math::Vec2i getSize();
-		void setSize(Math::Vec2i size);
+		math::Vec2i getSize();
+		void setSize(math::Vec2i size);
 
 		float aspectRatio();
 
@@ -37,7 +38,7 @@ namespace Pirkk::Graphics {
 		bool getKey(int key);
 
 		// Get and set mouse position in window
-		Math::Vec2f getMousePos();
-		void setMousePos(Math::Vec2f pos);
+		math::Vec2f getMousePos();
+		void setMousePos(math::Vec2f pos);
 	};
 }

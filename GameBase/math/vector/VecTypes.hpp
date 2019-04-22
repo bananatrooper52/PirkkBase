@@ -2,7 +2,7 @@
 
 #include "Vec.hpp"
 
-namespace Pirkk::Math {
+namespace pirkk::math {
 	// Define length- and type-specific vectors
 #define PIRKK_VEC_USING_ALL_TYPES(len)				\
 template<typename T> using Vec##len = Vec<T, len>;	\

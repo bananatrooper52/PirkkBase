@@ -1,16 +1,16 @@
 #pragma once
 
+#include <memory>
+
 #include "graphics/Window.hpp"
 #include "ticking/TickManager.hpp"
 
-using namespace Pirkk::Math;
-using namespace Pirkk::Ticking;
-using namespace Pirkk::Graphics;
-
 class Game {
 private:
-	TickManager tickManager;
-	Window window;
+	pirkk::ticking::TickManager tickManager;
+	std::shared_ptr<pirkk::graphics::Window> window;
+
+	void addRegistries();
 
 public:
 	Game();

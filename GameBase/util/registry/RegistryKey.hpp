@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace Pirkk::Util::Registry {
+namespace pirkk::util::registry {
 	class RegistryKey {
 	private:
 		const std::string key;

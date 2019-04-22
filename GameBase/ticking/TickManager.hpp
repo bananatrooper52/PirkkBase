@@ -6,7 +6,7 @@
 
 #include "TickCallback.hpp"
 
-namespace Pirkk::Ticking {
+namespace pirkk::ticking {
 	class TickManager {
 	private:
 		std::map<const char *, TickCallback *> callbacks;
