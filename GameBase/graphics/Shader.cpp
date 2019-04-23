@@ -117,7 +117,7 @@ void Shader::uniform4x4f(const char* name, Mat4f v, bool transpose) { glUniformM
 
 void Shader::setTexture2D(const char* name, const Image &image) {
 	glBindTexture(GL_TEXTURE_2D, getTextureId(name));
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.getSize().x, image.getSize().y, 0, GL_RGBA, GL_UNSIGNED_BYTE, &image.getData()[0]);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.getSize().x, image.getSize().y, 0, GL_RGBA, GL_FLOAT, &image.getData()[0]);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 }

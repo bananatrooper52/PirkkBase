@@ -56,6 +56,7 @@
     <ClInclude Include="util\registry\RegistryKey.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="resources\kernels\default.cl" />
     <None Include="resources\shaders\screenCover\frag.glsl" />
     <None Include="resources\shaders\screenCover\vert.glsl" />
   </ItemGroup>
@@ -153,6 +154,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessToFile>false</PreprocessToFile>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

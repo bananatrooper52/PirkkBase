@@ -2,10 +2,10 @@
 
 #include "../mesh/Mesh.hpp"
 
-namespace pirkk::graphics::RayTracing {
+namespace pirkk::graphics::raytracing {
 	class Scene {
 	private:
-		class ScreenMesh : public Mesh {
+		class ScreenMesh : public pirkk::graphics::Mesh {
 		private:
 
 		public:
