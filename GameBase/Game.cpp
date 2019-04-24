@@ -89,7 +89,6 @@ void openCLTest() {
 
 	size_t localWorkSize = 512;
 	size_t globalWorkSize = img.data.size() / 4 / localWorkSize * localWorkSize;
-	std::cout << globalWorkSize << std::endl;
 
 	queue.enqueueNDRangeKernel(kernel, NULL, globalWorkSize, localWorkSize);
 	queue.enqueueReadBuffer(buffOut, CL_TRUE, 0, globalWorkSize * sizeof(cl_float) * 4, &img.data[0]);
