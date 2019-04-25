@@ -39,6 +39,9 @@
     <ClCompile Include="graphics\mesh\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="graphics\raytracing\RaytraceShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\vector\Vec.hpp">
@@ -114,6 +117,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="graphics\Image.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\raytracing\RaytraceShader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

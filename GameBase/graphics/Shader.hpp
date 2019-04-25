@@ -14,9 +14,9 @@ namespace pirkk::graphics {
 	private:
 		std::string name;
 		GLuint id;
-		std::map<const char*, GLint> uniformLocations;
-		std::map<const char*, GLint> attributeLocations;
-		std::map<const char*, GLuint> textureIds;
+		std::map<std::string, GLint> uniformLocations;
+		std::map<std::string, GLint> attributeLocations;
+		std::map<std::string, GLuint> textureIds;
 
 		// Load vertex or fragment source string
 		GLuint loadShaderSource(std::string src, GLenum type);
@@ -32,25 +32,39 @@ namespace pirkk::graphics {
 		Shader(std::string name);
 
 		void bind();
-		GLint getUniformLocation(const char* name);
-		GLint getAttributeLocation(const char* name);
-		GLuint getTextureId(const char* name);
+		GLint getUniformLocation(std::string name);
+		GLint getAttributeLocation(std::string name);
+		GLuint getTextureId(std::string name);
 		std::string getName();
 
 		// Reload the source for the shader
 		void reload();
 
-		void uniform1f(const char* name, float v);
-		void uniform2f(const char* name, pirkk::math::Vec2f v);
-		void uniform3f(const char* name, pirkk::math::Vec3f v);
-		void uniform4f(const char* name, pirkk::math::Vec4f v);
-		void uniform1i(const char* name, int v);
-		void uniform2i(const char* name, pirkk::math::Vec2i v);
-		void uniform3i(const char* name, pirkk::math::Vec3i v);
-		void uniform4i(const char* name, pirkk::math::Vec4i v);
-		void uniform3x3f(const char* name, pirkk::math::Mat3f v, bool transpose = false);
-		void uniform4x4f(const char* name, pirkk::math::Mat4f v, bool transpose = false);
+		void uniform1f(std::string name, float v);
+		void uniform2f(std::string name, pirkk::math::Vec2f v);
+		void uniform3f(std::string name, pirkk::math::Vec3f v);
+		void uniform4f(std::string name, pirkk::math::Vec4f v);
+		void uniform1fv(std::string name, std::vector<float> v);
+		void uniform2fv(std::string name, std::vector<pirkk::math::Vec2f> v);
+		void uniform3fv(std::string name, std::vector<pirkk::math::Vec3f> v);
+		void uniform4fv(std::string name, std::vector<pirkk::math::Vec4f> v);
+		void uniform1i(std::string name, int v);
+		void uniform2i(std::string name, pirkk::math::Vec2i v);
+		void uniform3i(std::string name, pirkk::math::Vec3i v);
+		void uniform4i(std::string name, pirkk::math::Vec4i v);
+		void uniform1iv(std::string name, std::vector<int> v);
+		void uniform2iv(std::string name, std::vector<pirkk::math::Vec2i> v);
+		void uniform3iv(std::string name, std::vector<pirkk::math::Vec3i> v);
+		void uniform4iv(std::string name, std::vector<pirkk::math::Vec4i> v);
+		void uniform3x3f(std::string name, pirkk::math::Mat3f v, bool transpose = false);
+		void uniform4x4f(std::string name, pirkk::math::Mat4f v, bool transpose = false);
 
-		void setTexture2D(const char* name, const Image &data);
+		void setTexture2D(std::string name, const Image &data);
+
+		// arrName("a", 0) -> "a[0]"
+		static std::string arrName(std::string name, size_t index);
+
+		// memberName("a", "b") -> "a.b"
+		static std::string memberName(std::string name, std::string memberName);
 	};
 }

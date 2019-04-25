@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="graphics\mesh\Mesh.cpp" />
+    <ClCompile Include="graphics\raytracing\RaytraceShader.cpp" />
     <ClCompile Include="graphics\Shader.cpp" />
     <ClCompile Include="graphics\VertexBuffer.cpp" />
     <ClCompile Include="graphics\Window.cpp" />
@@ -33,6 +34,7 @@
     <ClInclude Include="graphics\Image.hpp" />
     <ClInclude Include="graphics\mesh\Mesh.hpp" />
     <ClInclude Include="graphics\mesh\ScreenCoverMesh.hpp" />
+    <ClInclude Include="graphics\raytracing\RaytraceShader.hpp" />
     <ClInclude Include="graphics\raytracing\Scene.hpp" />
     <ClInclude Include="graphics\Shader.hpp" />
     <ClInclude Include="graphics\VertexBuffer.hpp" />

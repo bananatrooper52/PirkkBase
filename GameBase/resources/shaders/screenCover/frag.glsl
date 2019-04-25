@@ -1,11 +1,6 @@
 #version 450
 
-in vec2 uv;
-
-out vec4 color;
-
-uniform ivec2 winSize;
-uniform float t;
+#define MAX_SPHERES 128
 
 struct Ray {
     vec3 o;
@@ -17,20 +12,38 @@ struct Sphere {
     float r;
 };
 
-struct RayHitInfo {
+struct RaycastInfo {
+    bool hit;
     float t;
     vec3 p;
     vec3 n;
 };
 
-bool raySphere(Ray r, Sphere s, inout RayHitInfo info) {
+in vec2 uv;
+
+out vec4 color;
+
+uniform ivec2 winSize;
+uniform float t;
+uniform Sphere spheres[MAX_SPHERES];
+uniform int sphereCount;
+
+RaycastInfo raySphere(Ray r, Sphere s) {
+
+    RaycastInfo info = {
+        false,
+        0,
+        vec3(0),
+        vec3(0)
+    };
+
     vec3 L = r.o - s.c;
     float a = dot(r.d, r.d);
     float b = 2 * dot(r.d, L);
     float c = dot(L, L) - s.r * s.r;
     float disc = b * b - 4 * a * c;
     float t0, t1;
-    if (disc < 0) return false;
+    if (disc < 0) return info;
     else if (disc == 0) t0 = t1 = -0.5 * b / a;
     else {
         float q = (b > 0) ? -0.5 * (b + sqrt(disc)) : -0.5 * (b - sqrt(disc));
@@ -44,12 +57,14 @@ bool raySphere(Ray r, Sphere s, inout RayHitInfo info) {
     }
     if (t0 < 0) {
         t0 = t1;
-        if (t0 < 0) return false;
+        if (t0 < 0) return info;
     }
     info.t = t0;
     info.p = r.o + r.d * t0;
     info.n = normalize(s.c - info.p);
-    return true;
+    info.hit = true;
+
+    return info;
 }
 
 void main() {
@@ -57,12 +72,22 @@ void main() {
     vec2 screenPos = uv * 2 - 1;
     screenPos.y *= -aspect;
 
-    RayHitInfo info;
-    Ray ray = { vec3(0, 0, 0), normalize(vec3(screenPos.x, screenPos.y, -1.5)) };
-    Sphere sphere = { vec3(0, 0, -4), 1 };
-    bool hit = raySphere(ray, sphere, info);
+    RaycastInfo closestInfo = {
+        false,
+        0,
+        vec3(0),
+        vec3(0)
+    };
 
-    float l = max(0.f, dot(info.n, normalize(vec3(t, 0, 0) - info.p)));
+    for (int i = 0; i < sphereCount; i++) {
+        Ray ray = Ray(vec3(0, 0, 0), normalize(vec3(screenPos.x, screenPos.y, -1.5)));
+        Sphere sphere = { vec3(0, 0, -4), 1 };
+        RaycastInfo info = raySphere(ray, spheres[i]);
+        if (info.hit && (!closestInfo.hit || distance(ray.o, info.p) < distance(ray.o, closestInfo.p)))
+            closestInfo = info;
+    }
 
-    color = hit ? vec4(vec3(1, 0, 1) * l, 1) : vec4(0, 0, 0, 1);
+    float l = max(0.f, dot(closestInfo.n, normalize(closestInfo.p - vec3(t, 0, 0))));
+
+    color = closestInfo.hit ? vec4(vec3(1, 0, 1) * l, 1) : vec4(0, 0, 0, 1);
 }
