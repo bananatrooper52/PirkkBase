@@ -80,9 +80,6 @@ void Game::tick(float delta) {
 void Game::render() {
 	window->setTitle(std::to_string(renderCallback->getTps()));
 
-	size_t localWorkSize = 512;
-	size_t globalWorkSize = img.data.size() / 4 / localWorkSize * localWorkSize;
-
 	shader->uniform1f("t", sin(t) * 10.f);
 	shader->uniform2i("winSize", Vec2i(winSize));
 
