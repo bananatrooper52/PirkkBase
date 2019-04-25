@@ -2,10 +2,6 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#define CL_HPP_TARGET_OPENCL_VERSION 200
-#define CL_HPP_ENABLE_EXCEPTIONS
-#define CL_USE_DEPRECATED_OPENCL_1_2_APIS
-#include <CL/cl.hpp>
 #include <algorithm>
 #include <numeric>
 
@@ -30,8 +26,8 @@ std::shared_ptr<Shader> shader;
 
 Vec3f cameraPos(0);
 Mat4f cameraRot(1);
-Vec2ui winSize(1024, 768);
-unsigned int pixScale = 4;
+Vec2ui winSize(1800, 1000);
+unsigned int pixScale = 1;
 
 float t;
 
@@ -39,59 +35,7 @@ Vec3f position;
 
 Image img;
 
-cl::Context context;
-cl::Kernel kernel;
-cl::CommandQueue queue;
-
-void openCLTest() {
-
-	// Select platform
-	std::vector<cl::Platform> platforms;
-	cl::Platform::get(&platforms);
-	std::cout << "Enter desired platform:\n";
-	for (size_t i = 0; i < platforms.size(); i++) {
-		std::cout << "  " << i << ": " << platforms[i].getInfo<CL_PLATFORM_NAME>() << "\n";
-	}
-	std::cout << std::endl;
-	size_t platformSelect = 0;
-	std::cin >> platformSelect;
-	cl::Platform platform = platforms[platformSelect];
-
-	// Select device
-	std::vector<cl::Device> devices;
-	platform.getDevices(CL_DEVICE_TYPE_ALL, &devices);
-	std::cout << "Enter desired device:\n";
-	for (size_t i = 0; i < devices.size(); i++) {
-		std::cout << "  " << i << ": " << devices[i].getInfo<CL_DEVICE_NAME>() << "\n";
-	}
-	std::cout << std::endl;
-	size_t deviceSelect = 0;
-	std::cin >> deviceSelect;
-	cl::Device device = devices[deviceSelect];
-	std::cout << "Selected device: " << device.getInfo<CL_DEVICE_NAME>() << "\n";
-
-	// Create context
-	context = cl::Context(device);
-
-	// Load kernel source
-	std::string src = pirkk::util::loadFile("resources/kernels/default.cl");
-
-	cl::Program program(context, src);
-
-	cl_int err = program.build({ device }, "");
-	if (err) std::cerr << program.getBuildInfo<CL_PROGRAM_BUILD_LOG>(device);
-
-	kernel = cl::Kernel(program, "renderRaytrace");
-
-	img = Image(winSize / pixScale);
-
-	queue = cl::CommandQueue(context, device);
-}
-
 Game::Game() {
-
-	openCLTest();
-
 	addRegistries();
 
 	tickManager.registerCallback("tick", tickCallback = new TickCallback([&](float delta) { tick(delta); }, 1.f / 60.f));
@@ -139,17 +83,8 @@ void Game::render() {
 	size_t localWorkSize = 512;
 	size_t globalWorkSize = img.data.size() / 4 / localWorkSize * localWorkSize;
 
-	cl::Buffer buffOut(context, CL_MEM_WRITE_ONLY, img.data.size() * sizeof(cl_int), NULL);
-
-	kernel.setArg(0, buffOut);
-	kernel.setArg(1, (int)img.getSize().x);
-	kernel.setArg(2, (int)img.getSize().y);
-	kernel.setArg(3, sin(t) * 10.f);
-
-	queue.enqueueNDRangeKernel(kernel, NULL, globalWorkSize, localWorkSize);
-	queue.enqueueReadBuffer(buffOut, CL_TRUE, 0, globalWorkSize * sizeof(cl_float) * 4, &img.data[0]);
-
-	shader->setTexture2D("tex", img);
+	shader->uniform1f("t", sin(t) * 10.f);
+	shader->uniform2i("winSize", Vec2i(winSize));
 
 	screenMesh->render();
 

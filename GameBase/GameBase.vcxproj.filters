@@ -120,6 +120,5 @@
   <ItemGroup>
     <None Include="resources\shaders\screenCover\frag.glsl" />
     <None Include="resources\shaders\screenCover\vert.glsl" />
-    <None Include="resources\kernels\default.cl" />
   </ItemGroup>
 </Project>

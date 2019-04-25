@@ -56,7 +56,6 @@
     <ClInclude Include="util\registry\RegistryKey.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="resources\kernels\default.cl" />
     <None Include="resources\shaders\screenCover\frag.glsl" />
     <None Include="resources\shaders\screenCover\vert.glsl" />
   </ItemGroup>
