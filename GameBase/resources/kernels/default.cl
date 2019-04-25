@@ -43,11 +43,11 @@ bool raySphere(struct Ray r, struct Sphere s, struct RayHitInfo *out) {
     }
     out->t = t0;
     out->p = r.o + r.d * t0;
-    out->n = normalize(out->p - s.c);
+    out->n = normalize(s.c - out->p);
     return true;
 }
 
-__kernel void renderRaytrace(__global float4* output, int width, int height) {
+__kernel void renderRaytrace(__global float4* output, int width, int height, float t) {
     const int workItemId = get_global_id(0);
     float aspect = (float)height / (float)width;
     int2 pixelPos = (int2)(workItemId % width, workItemId / width);
@@ -59,7 +59,7 @@ __kernel void renderRaytrace(__global float4* output, int width, int height) {
     struct Sphere sphere = { (float3)(0, 0, -4), 1 };
     bool hit = raySphere(ray, sphere, &out);
 
-    float l = max(0.f, dot(out.n, normalize((float3)(0, -1, -1))));
+    float l = max(0.f, dot(out.n, normalize((float3)(t, 0, 0) - out.p)));
 
     output[workItemId] = hit ? (float4)((float3)(1, 0, 1) * l, 1) : (float4)(0, 0, 0, 1);
 }

@@ -30,12 +30,18 @@ std::shared_ptr<Shader> shader;
 
 Vec3f cameraPos(0);
 Mat4f cameraRot(1);
+Vec2ui winSize(1024, 768);
+unsigned int pixScale = 4;
 
 float t;
 
 Vec3f position;
 
 Image img;
+
+cl::Context context;
+cl::Kernel kernel;
+cl::CommandQueue queue;
 
 void openCLTest() {
 
@@ -65,7 +71,7 @@ void openCLTest() {
 	std::cout << "Selected device: " << device.getInfo<CL_DEVICE_NAME>() << "\n";
 
 	// Create context
-	cl::Context context(device);
+	context = cl::Context(device);
 
 	// Load kernel source
 	std::string src = pirkk::util::loadFile("resources/kernels/default.cl");
@@ -75,24 +81,11 @@ void openCLTest() {
 	cl_int err = program.build({ device }, "");
 	if (err) std::cerr << program.getBuildInfo<CL_PROGRAM_BUILD_LOG>(device);
 
-	cl::Kernel kernel(program, "renderRaytrace");
+	kernel = cl::Kernel(program, "renderRaytrace");
 
-	img = Image(Vec2ui(1366, 768));
+	img = Image(winSize / pixScale);
 
-	cl::Buffer buffOut(context, CL_MEM_WRITE_ONLY, img.data.size() * sizeof(cl_int), NULL);
-
-	kernel.setArg(0, buffOut);
-	kernel.setArg(1, (int)img.getSize().x);
-	kernel.setArg(2, (int)img.getSize().y);
-
-	cl::CommandQueue queue(context, device);
-
-	size_t localWorkSize = 512;
-	size_t globalWorkSize = img.data.size() / 4 / localWorkSize * localWorkSize;
-
-	queue.enqueueNDRangeKernel(kernel, NULL, globalWorkSize, localWorkSize);
-	queue.enqueueReadBuffer(buffOut, CL_TRUE, 0, globalWorkSize * sizeof(cl_float) * 4, &img.data[0]);
-
+	queue = cl::CommandQueue(context, device);
 }
 
 Game::Game() {
@@ -101,10 +94,8 @@ Game::Game() {
 
 	addRegistries();
 
-	shader->setTexture2D("tex", img);
-
-	tickManager.registerCallback("tick", new TickCallback([&](float delta) { tick(delta); }, 1.f / 60.f));
-	tickManager.registerCallback("render", new TickCallback([&](float delta) { render(); }, 1.f / 60.f));
+	tickManager.registerCallback("tick", tickCallback = new TickCallback([&](float delta) { tick(delta); }, 1.f / 60.f));
+	tickManager.registerCallback("render", renderCallback = new TickCallback([&](float delta) { render(); }, 1.f / 60.f));
 	tickManager.start();
 
 	glfwTerminate();
@@ -112,7 +103,7 @@ Game::Game() {
 
 void Game::addRegistries() {
 	std::shared_ptr<Registry<Window>> windowRegistry = RegistryHandler::addRegistry<Window>();
-	window = std::shared_ptr<Window>((new Window(Vec2i(1366, 768), "Game"))->makeContextCurrent());
+	window = std::shared_ptr<Window>((new Window(Vec2i(winSize), "Game"))->makeContextCurrent());
 	windowRegistry->registerEntry("main", window);
 	if (glewInit() != GLEW_OK) throw std::runtime_error("Failed to initialize GLEW"); // Initialize GLEW after window context is ready
 
@@ -143,6 +134,23 @@ void Game::tick(float delta) {
 }
 
 void Game::render() {
+	window->setTitle(std::to_string(renderCallback->getTps()));
+
+	size_t localWorkSize = 512;
+	size_t globalWorkSize = img.data.size() / 4 / localWorkSize * localWorkSize;
+
+	cl::Buffer buffOut(context, CL_MEM_WRITE_ONLY, img.data.size() * sizeof(cl_int), NULL);
+
+	kernel.setArg(0, buffOut);
+	kernel.setArg(1, (int)img.getSize().x);
+	kernel.setArg(2, (int)img.getSize().y);
+	kernel.setArg(3, sin(t) * 10.f);
+
+	queue.enqueueNDRangeKernel(kernel, NULL, globalWorkSize, localWorkSize);
+	queue.enqueueReadBuffer(buffOut, CL_TRUE, 0, globalWorkSize * sizeof(cl_float) * 4, &img.data[0]);
+
+	shader->setTexture2D("tex", img);
+
 	screenMesh->render();
 
 	window->swapBuffers();

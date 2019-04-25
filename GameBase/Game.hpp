@@ -12,6 +12,9 @@ private:
 
 	void addRegistries();
 
+	pirkk::ticking::TickCallback* tickCallback;
+	pirkk::ticking::TickCallback* renderCallback;
+
 public:
 	Game();
 	void tick(float delta);
