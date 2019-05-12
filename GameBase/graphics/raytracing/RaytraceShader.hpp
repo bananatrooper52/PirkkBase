@@ -8,6 +8,8 @@ public:
 	struct Sphere {
 		pirkk::math::Vec3f c;
 		float r;
+		pirkk::math::Vec3f color;
+		float emission;
 	};
 
 	void uniformSphere(std::string name, Sphere sphere);

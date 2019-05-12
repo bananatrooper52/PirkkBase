@@ -1,6 +1,7 @@
 #version 450
 
 #define MAX_SPHERES 128
+#define REFLECTION_LIMIT 8
 
 struct Ray {
     vec3 o;
@@ -10,13 +11,8 @@ struct Ray {
 struct Sphere {
     vec3 c;
     float r;
-};
-
-struct RaycastInfo {
-    bool hit;
-    float t;
-    vec3 p;
-    vec3 n;
+    vec3 color;
+    float emission;
 };
 
 in vec2 uv;
@@ -27,67 +23,88 @@ uniform ivec2 winSize;
 uniform float t;
 uniform Sphere spheres[MAX_SPHERES];
 uniform int sphereCount;
+uniform vec3 cameraPos;
+uniform mat4 cameraRot;
 
-RaycastInfo raySphere(Ray r, Sphere s) {
+float lerp(float a, float b, float t) {
+    return a + (b - a) * t;
+}
 
-    RaycastInfo info = {
-        false,
-        0,
-        vec3(0),
-        vec3(0)
-    };
+float smin(float a, float b, float k = 32) {
+    float res = exp2(-k * a) + exp2(-k * b);
+    return -log2(res) / k;
+}
 
-    vec3 L = r.o - s.c;
-    float a = dot(r.d, r.d);
-    float b = 2 * dot(r.d, L);
-    float c = dot(L, L) - s.r * s.r;
-    float disc = b * b - 4 * a * c;
-    float t0, t1;
-    if (disc < 0) return info;
-    else if (disc == 0) t0 = t1 = -0.5 * b / a;
-    else {
-        float q = (b > 0) ? -0.5 * (b + sqrt(disc)) : -0.5 * (b - sqrt(disc));
-        t0 = q / a;
-        t1 = c / q;
+float sphereDist(vec3 p) {
+    float v = 0;
+    for (int i = 0; i < sphereCount; i++) {
+        float dist = distance(p, spheres[i].c) - spheres[i].r;
+        v = i == 0 ? 
+            dist : 
+            smin(v, dist, 8);
     }
-    if (t0 > t1) {
-        float tmp = t0;
-        t0 = t1;
-        t1 = tmp;
-    }
-    if (t0 < 0) {
-        t0 = t1;
-        if (t0 < 0) return info;
-    }
-    info.t = t0;
-    info.p = r.o + r.d * t0;
-    info.n = normalize(s.c - info.p);
-    info.hit = true;
+    return v;
+}
 
-    return info;
+float torusDist(vec3 p) {
+    float v = 0;
+    for (int i = 0; i < sphereCount; i++) {
+        vec3 p0 = p - spheres[i].c;
+        vec2 t = vec2(0.5, 0.25);
+        vec2 q = vec2(length(p0.xz) - t.x, p0.y);
+        float dist = length(q) - t.y;
+        v = i == 0 ? 
+            dist : 
+            smin(v, dist, 32);
+    }
+    return v;
+}
+
+float cubeDist(vec3 p) {
+    float v = 0;
+    for (int i = 0; i < sphereCount; i++) {
+        vec3 p0 = p - spheres[i].c;
+        vec3 b = vec3(spheres[i].r);
+        vec3 d = abs(p0) - b;
+        float dist = length(max(d, 0)) + min(max(d.x, max(d.y, d.z)), 0);
+        v = i == 0 ? 
+            dist : 
+            smin(v, dist, 32);
+    }
+    return v;
+}
+
+vec3 getNormal(vec3 p) {
+    const vec2 h = vec2(0.01, 0);
+    return normalize(vec3(
+            cubeDist(p + h.xyy) - cubeDist(p - h.xyy),
+            cubeDist(p + h.yxy) - cubeDist(p - h.yxy),
+            cubeDist(p + h.yyx) - cubeDist(p - h.yyx)
+    ));
+}
+
+vec4 raycast(Ray r) {
+    // Distance of the full ray
+    float rdist = 0;
+    for (int i = 0; i < 100; i++) {
+        float dist = cubeDist(r.o);
+        rdist += dist;
+        if (dist < 0.01) {
+            vec3 n = getNormal(r.o);
+            float l = max(0, dot(n, vec3(0, 1, 0)));
+            return vec4(n * l, 0);
+        }
+        r.o += r.d * dist;
+    }
+    return vec4(0, 0, 0, 0);
 }
 
 void main() {
-    float aspect = float(winSize.y) / float(winSize.x);
+    float aspect = float(winSize.x) / float(winSize.y);
     vec2 screenPos = uv * 2 - 1;
-    screenPos.y *= -aspect;
+    screenPos.x *= aspect;
 
-    RaycastInfo closestInfo = {
-        false,
-        0,
-        vec3(0),
-        vec3(0)
-    };
+    Ray ray = { cameraPos, normalize(vec3(screenPos.x, screenPos.y, -1.5)) * mat3(cameraRot) };
 
-    for (int i = 0; i < sphereCount; i++) {
-        Ray ray = Ray(vec3(0, 0, 0), normalize(vec3(screenPos.x, screenPos.y, -1.5)));
-        Sphere sphere = { vec3(0, 0, -4), 1 };
-        RaycastInfo info = raySphere(ray, spheres[i]);
-        if (info.hit && (!closestInfo.hit || distance(ray.o, info.p) < distance(ray.o, closestInfo.p)))
-            closestInfo = info;
-    }
-
-    float l = max(0.f, dot(closestInfo.n, normalize(closestInfo.p - vec3(t, 0, 0))));
-
-    color = closestInfo.hit ? vec4(vec3(1, 0, 1) * l, 1) : vec4(0, 0, 0, 1);
+    color = raycast(ray);
 }

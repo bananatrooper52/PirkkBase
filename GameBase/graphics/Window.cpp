@@ -57,3 +57,7 @@ Vec2f Window::getMousePos() {
 	glfwGetCursorPos(window, &pos.x, &pos.y);
 	return Vec2f(pos);
 }
+
+void Window::setMousePos(Vec2f pos) {
+	glfwSetCursorPos(window, pos.x, pos.y);
+}

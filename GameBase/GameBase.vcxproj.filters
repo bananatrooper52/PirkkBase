@@ -122,6 +122,9 @@
     <ClInclude Include="graphics\raytracing\RaytraceShader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="math\quaternion\QuatOp.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\screenCover\frag.glsl" />
