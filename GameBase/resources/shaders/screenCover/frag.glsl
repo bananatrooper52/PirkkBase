@@ -41,7 +41,7 @@ float sphereDist(vec3 p) {
         float dist = distance(p, spheres[i].c) - spheres[i].r;
         v = i == 0 ? 
             dist : 
-            smin(v, dist, 8);
+            smin(v, dist, 4);
     }
     return v;
 }
@@ -77,17 +77,35 @@ float cubeDist(vec3 p) {
 vec3 getNormal(vec3 p) {
     const vec2 h = vec2(0.01, 0);
     return normalize(vec3(
-            cubeDist(p + h.xyy) - cubeDist(p - h.xyy),
-            cubeDist(p + h.yxy) - cubeDist(p - h.yxy),
-            cubeDist(p + h.yyx) - cubeDist(p - h.yyx)
+            sphereDist(p + h.xyy) - sphereDist(p - h.xyy),
+            sphereDist(p + h.yxy) - sphereDist(p - h.yxy),
+            sphereDist(p + h.yyx) - sphereDist(p - h.yyx)
     ));
 }
 
+vec3 aabbMin = vec3(0), aabbMax = vec3(0);
+
 vec4 raycast(Ray r) {
+    
     // Distance of the full ray
     float rdist = 0;
-    for (int i = 0; i < 100; i++) {
-        float dist = cubeDist(r.o);
+    for (int i = 0; i < 50; i++) {
+
+
+        float dist = sphereDist(r.o);
+
+        vec3 p = r.o + r.d * dist;
+
+        if (
+            p.x < aabbMin.x ||
+            p.y < aabbMin.y ||
+            p.z < aabbMin.z ||
+
+            p.x > aabbMax.x ||
+            p.y > aabbMax.y ||
+            p.z > aabbMax.z
+        ) break;
+
         rdist += dist;
         if (dist < 0.01) {
             vec3 n = getNormal(r.o);
@@ -100,6 +118,24 @@ vec4 raycast(Ray r) {
 }
 
 void main() {
+
+    // Calculate bounding box of spheres
+    for (int i = 0; i < sphereCount; i++) {
+        vec3 scMin = spheres[i].c - spheres[i].r;
+        vec3 scMax = spheres[i].c + spheres[i].r;
+        if (i == 0) {
+            aabbMin = scMin;
+            aabbMax = scMax;
+        }
+        if (scMin.x < aabbMin.x) aabbMin.x = scMin.x;
+        if (scMin.y < aabbMin.y) aabbMin.y = scMin.y;
+        if (scMin.z < aabbMin.z) aabbMin.z = scMin.z;
+        
+        if (scMax.x > aabbMax.x) aabbMax.x = scMax.x;
+        if (scMax.y > aabbMax.y) aabbMax.y = scMax.y;
+        if (scMax.z > aabbMax.z) aabbMax.z = scMax.z;
+    }
+
     float aspect = float(winSize.x) / float(winSize.y);
     vec2 screenPos = uv * 2 - 1;
     screenPos.x *= aspect;

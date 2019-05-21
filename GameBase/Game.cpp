@@ -40,18 +40,26 @@ Image img;
 
 Game::Game() {
 
-	size_t TERRAIN_SIZE = 32;
+	addRegistries();
+
+	size_t TERRAIN_SIZE = 8;
+
+	size_t sphereCount = 0;
 
 	for (size_t x = 0; x < TERRAIN_SIZE; x++) {
 		for (size_t z = 0; z < TERRAIN_SIZE; z++) {
-			float height = rand() % 16;
-			for (size_t y = 0; y < TERRAIN_SIZE; y++) {
-				if (y < height) y = 1;
+			float height = float(rand()) / float(RAND_MAX) * float(TERRAIN_SIZE) / 2.f;
+			for (size_t y = 0; y <= TERRAIN_SIZE; y++) {
+				if (y == std::floor(height)) {
+					shader->uniformSphere(Shader::arrName("spheres", sphereCount), { Vec3f(x, y, z), height - y, Vec3f(1, 0, 1), 0 });
+					sphereCount++;
+				}
 			}
 		}
 	}
 
-	addRegistries();
+	std::cout << sphereCount << std::endl;
+	shader->uniform1i("sphereCount", sphereCount);
 
 	tickManager.registerCallback("tick", tickCallback = new TickCallback([&](float delta) { tick(delta); }, 1.f / 60.f));
 	tickManager.registerCallback("render", renderCallback = new TickCallback([&](float delta) { render(); }, 1.f / 60.f));
@@ -111,13 +119,6 @@ void Game::render() {
 	shader->uniform2i("winSize", Vec2i(winSize));
 	shader->uniform3f("cameraPos", cameraPos);
 	shader->uniform4x4f("cameraRot", cameraRot);
-
-	shader->uniformSphere(Shader::arrName("spheres", 0), { Vec3f(-2, sin(t), -4), 0.6f, Vec3f(1, 0, 1), 0 });
-	shader->uniformSphere(Shader::arrName("spheres", 1), { Vec3f(-1, sin(t + 0.2 * pi<float>() * 2), -4), 0.6f, Vec3f(0.5, 0.5, 0.5), 0 });
-	shader->uniformSphere(Shader::arrName("spheres", 2), { Vec3f(0, sin(t + 0.4 * pi<float>() * 2), -4), 0.6f, Vec3f(1, 0.5, 0.2), 1 });
-	shader->uniformSphere(Shader::arrName("spheres", 3), { Vec3f(1, sin(t + 0.6 * pi<float>() * 2), -4), 0.6f, Vec3f(0.5, 1, 0.6), 0 });
-	shader->uniformSphere(Shader::arrName("spheres", 4), { Vec3f(2, sin(t + 0.8 * pi<float>() * 2), -4), 0.6f, Vec3f(0.4, 0.1, 1), 0 });
-	shader->uniform1i("sphereCount", 5);
 
 	screenMesh->render();
 
