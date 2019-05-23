@@ -11,13 +11,12 @@ namespace pirkk::math {
 			struct { T r, g, b; };
 		};
 
-		Vec(T _x, T _y, T _z) : x(_x), y(_y), z(_z) {}
-		Vec(T _v) : Vec(_v, _v, _v) {}
+		Vec(T x, T y, T z) : x(x), y(y), z(z) {}
+		Vec(T v) : Vec(v, v, v) {}
 		Vec() : Vec(0) {}
-		template<typename U> explicit Vec(const Vec<U, 3> &other) { for (size_t i = 0; i < 3; i++) data[i] = other.data[i]; }
-		template<typename U> explicit Vec(const Vec<U, 4> &other) { for (size_t i = 0; i < 3; i++) data[i] = other.data[i]; }
+		template<typename U, size_t L> explicit Vec(const Vec<U, L>& other) { for (size_t i = 0; i < 3 && i < L; i++) data[i] = other.data[i]; }
 
-		T &operator[](size_t i) { return data[i]; }
+		T& operator[](size_t i) { return data[i]; }
 		T operator[](size_t i) const { return data[i]; }
 	};
 }
