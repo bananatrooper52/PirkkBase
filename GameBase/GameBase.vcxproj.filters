@@ -116,13 +116,22 @@
     <ClInclude Include="graphics\mesh\ScreenCoverMesh.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\Image.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="graphics\raytracing\RaytraceShader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="math\quaternion\QuatOp.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\Texture.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="math\vector\Vec1.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\GLTypes.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\TextureFormats.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

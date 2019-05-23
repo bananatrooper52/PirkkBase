@@ -125,13 +125,6 @@ void Shader::uniform4iv(std::string name, std::vector<Vec4i> v) { bind(); glUnif
 void Shader::uniform3x3f(std::string name, Mat3f v, bool transpose) { glUniformMatrix3fv(getUniformLocation(name), 1, transpose, &v[0][0]); }
 void Shader::uniform4x4f(std::string name, Mat4f v, bool transpose) { glUniformMatrix4fv(getUniformLocation(name), 1, transpose, &v[0][0]); }
 
-void Shader::setTexture2D(std::string name, const Image &image) {
-	glBindTexture(GL_TEXTURE_2D, getTextureId(name));
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.getSize().x, image.getSize().y, 0, GL_RGBA, GL_FLOAT, &image.getData()[0]);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-}
-
 std::string Shader::arrName(std::string name, size_t index) {
 	std::stringstream out;
 	out << name << "[" << index << "]";

@@ -1,7 +1,8 @@
 #pragma once
 
 #include "../math/Math.hpp"
-#include "Image.hpp"
+#include "Texture.hpp"
+#include "GLTypes.hpp"
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -10,6 +11,7 @@
 #include <vector>
 
 namespace pirkk::graphics {
+
 	class Shader {
 	private:
 		std::string name;
@@ -37,7 +39,7 @@ namespace pirkk::graphics {
 		GLuint getTextureId(std::string name);
 		std::string getName();
 
-		// Reload the source for the shader
+		// Reload the source for the shader from file
 		void reload();
 
 		void uniform1f(std::string name, float v);
@@ -59,7 +61,33 @@ namespace pirkk::graphics {
 		void uniform3x3f(std::string name, pirkk::math::Mat3f v, bool transpose = false);
 		void uniform4x4f(std::string name, pirkk::math::Mat4f v, bool transpose = false);
 
-		void setTexture2D(std::string name, const Image &data);
+		template<typename T, size_t L, size_t D>
+		void setTexture(std::string name, Texture<T, L, D>& tex) {
+
+			GLenum format = TextureFormats::getGLFormatEnum(L);
+			GLenum type = GLTypes::getGLTypeEnum<T>();
+			pirkk::math::Vec<unsigned int, D> size = tex.getSize();
+			void* data = &tex.data[0][0];
+			GLenum target;
+
+			switch (L) {
+			case 1: target = GL_TEXTURE_1D; break;
+			case 2: target = GL_TEXTURE_2D; break;
+			case 3: target = GL_TEXTURE_3D; break;
+			default: throw std::exception("Invalid texture size");
+			}
+
+			glBindTexture(target, getTextureId(name));
+
+			switch (L) {
+			case 1: glTexImage1D(target, 0, format, size.x, 0, format, type, data); break;
+			case 2: glTexImage2D(target, 0, format, size.x, size.y, 0, format, type, data); break;
+			case 3: glTexImage3D(target, 0, format, size.x, size.y, size.z, 0, format, type, data); break;
+			}
+			
+			glTexParameteri(target, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glTexParameteri(target, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		}
 
 		// arrName("a", 0) -> "a[0]"
 		static std::string arrName(std::string name, size_t index);

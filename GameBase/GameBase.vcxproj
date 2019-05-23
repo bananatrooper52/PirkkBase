@@ -31,15 +31,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.hpp" />
-    <ClInclude Include="graphics\Image.hpp" />
+    <ClInclude Include="graphics\GLTypes.hpp" />
+    <ClInclude Include="graphics\Texture.hpp" />
     <ClInclude Include="graphics\mesh\Mesh.hpp" />
     <ClInclude Include="graphics\mesh\ScreenCoverMesh.hpp" />
     <ClInclude Include="graphics\raytracing\RaytraceShader.hpp" />
     <ClInclude Include="graphics\raytracing\Scene.hpp" />
     <ClInclude Include="graphics\Shader.hpp" />
+    <ClInclude Include="graphics\TextureFormats.hpp" />
     <ClInclude Include="graphics\VertexBuffer.hpp" />
     <ClInclude Include="graphics\Window.hpp" />
     <ClInclude Include="math\quaternion\QuatOp.hpp" />
+    <ClInclude Include="math\vector\Vec1.hpp" />
     <ClInclude Include="ticking\TickCallback.hpp" />
     <ClInclude Include="ticking\TickManager.hpp" />
     <ClInclude Include="math\Math.hpp" />
@@ -156,7 +159,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessToFile>false</PreprocessToFile>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

@@ -15,6 +15,7 @@
 #include "graphics/mesh/ScreenCoverMesh.hpp"
 #include "util/FileLoader.hpp"
 #include "graphics/raytracing/RaytraceShader.hpp"
+#include "graphics/Texture.hpp"
 
 using namespace pirkk::util::registry;
 using namespace pirkk::math;
@@ -36,30 +37,15 @@ float*** terrain;
 
 Vec3f position;
 
-Image img;
-
 Game::Game() {
 
 	addRegistries();
 
-	size_t TERRAIN_SIZE = 8;
+	Texture3D<float, 3> tex(Vec3ui(32, 32, 1));
 
-	size_t sphereCount = 0;
+	tex.data[0] = Vec3f(1, 0, 1);
 
-	for (size_t x = 0; x < TERRAIN_SIZE; x++) {
-		for (size_t z = 0; z < TERRAIN_SIZE; z++) {
-			float height = float(rand()) / float(RAND_MAX) * float(TERRAIN_SIZE) / 2.f;
-			for (size_t y = 0; y <= TERRAIN_SIZE; y++) {
-				if (y == std::floor(height)) {
-					shader->uniformSphere(Shader::arrName("spheres", sphereCount), { Vec3f(x, y, z), height - y, Vec3f(1, 0, 1), 0 });
-					sphereCount++;
-				}
-			}
-		}
-	}
-
-	std::cout << sphereCount << std::endl;
-	shader->uniform1i("sphereCount", sphereCount);
+	shader->setTexture("tex", tex);
 
 	tickManager.registerCallback("tick", tickCallback = new TickCallback([&](float delta) { tick(delta); }, 1.f / 60.f));
 	tickManager.registerCallback("render", renderCallback = new TickCallback([&](float delta) { render(); }, 1.f / 60.f));
@@ -93,12 +79,13 @@ void Game::tick(float delta) {
 	float mouseSpeed = 0.003f;
 	Vec2f mouseMove = window->getMousePos() - Vec2f(winSize) / 2.f;
 	cameraRot = rotate(Vec3f(0, 1, 0), mouseMove.x * mouseSpeed) * cameraRot;
+	cameraRot = rotate(Vec3f(1, 0, 0), mouseMove.y * mouseSpeed) * cameraRot;
 
 	window->setMousePos(Vec2f(winSize) / 2.f);
 
-	Vec3f moveZ = Vec3f(cameraRot * Vec4f(0, 0, 1, 0) * delta) * Vec3f(-1, 1, 1);
-	Vec3f moveX = Vec3f(cameraRot * Vec4f(1, 0, 0, 0) * delta) * Vec3f(1, 1, -1);
-	Vec3f moveY = Vec3f(cameraRot * Vec4f(0, 1, 0, 0) * delta);
+	Vec3f moveZ = Vec3f(cameraRot * Vec4f(0, 0, 1, 0)) * delta;
+	Vec3f moveX = Vec3f(cameraRot * Vec4f(1, 0, 0, 0)) * delta;
+	Vec3f moveY = Vec3f(cameraRot * Vec4f(0, 1, 0, 0)) * delta;
 
 	if (window->getKey(GLFW_KEY_W)) cameraPos -= moveZ;
 	if (window->getKey(GLFW_KEY_S)) cameraPos += moveZ;

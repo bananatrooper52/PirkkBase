@@ -107,6 +107,20 @@ namespace pirkk::math {
 			);
 	}
 
+	// Get the linear index of a vector position within a space
+	template<typename T, size_t L>
+	T linearIndex(Vec<T, L> pos, Vec<T, L> bounds) {
+		T index = 0;
+		for (size_t i = 0; i < L; i++) {
+			T div = 0;
+			for (size_t j = 0; j < i; j++) {
+				div += bounds[j];
+			}
+			index += pos[i] / div == 0 ? 1 : div;
+		}
+		return index;
+	}
+
 	// Create a translation matrix
 	template<typename T, size_t L>
 	Mat<T, L + 1, L + 1> translate(const Vec<T, L> & translation) {

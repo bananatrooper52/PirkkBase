@@ -26,6 +26,7 @@ namespace pirkk::math {
 	}
 }
 
+#include "Vec1.hpp"
 #include "Vec2.hpp"
 #include "Vec3.hpp"
 #include "Vec4.hpp"

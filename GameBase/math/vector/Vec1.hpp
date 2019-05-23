@@ -11,7 +11,7 @@ namespace pirkk::math {
 			struct { T r; };
 		};
 
-		Vec(T x) : Vec(x) {}
+		explicit Vec(T x) : Vec(x) {}
 		Vec() : Vec(0) {}
 		template<typename U, size_t L> explicit Vec(const Vec<U, L>& other) { for (size_t i = 0; i < 1 && i < L; i++) data[i] = other.data[i]; }
 		template<typename U> explicit Vec(const U v) { this.x = v; }

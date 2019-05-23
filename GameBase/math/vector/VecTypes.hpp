@@ -17,6 +17,7 @@ using Vec##len##l = Vec##len##<int64_t>;			\
 using Vec##len##f = Vec##len##<float>;				\
 using Vec##len##d = Vec##len##<double>
 
+	PIRKK_VEC_USING_ALL_TYPES(1);
 	PIRKK_VEC_USING_ALL_TYPES(2);
 	PIRKK_VEC_USING_ALL_TYPES(3);
 	PIRKK_VEC_USING_ALL_TYPES(4);
