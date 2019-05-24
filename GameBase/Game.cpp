@@ -78,8 +78,12 @@ void Game::tick(float delta) {
 
 	float mouseSpeed = 0.003f;
 	Vec2f mouseMove = window->getMousePos() - Vec2f(winSize) / 2.f;
-	cameraRot = rotate(Vec3f(0, 1, 0), mouseMove.x * mouseSpeed) * cameraRot;
-	cameraRot = rotate(Vec3f(1, 0, 0), mouseMove.y * mouseSpeed) * cameraRot;
+	float roll = 0;
+	if (window->getKey(GLFW_KEY_Q)) roll += delta;
+	if (window->getKey(GLFW_KEY_E)) roll -= delta;
+	cameraRot = rotate(Vec3f(cameraRot * Vec4f(0, 1, 0, 0)), -mouseMove.x * mouseSpeed) * cameraRot;
+	cameraRot = rotate(Vec3f(cameraRot * Vec4f(1, 0, 0, 0)), -mouseMove.y * mouseSpeed) * cameraRot;
+	cameraRot = rotate(Vec3f(cameraRot * Vec4f(0, 0, 1, 0)), roll) * cameraRot;
 
 	window->setMousePos(Vec2f(winSize) / 2.f);
 

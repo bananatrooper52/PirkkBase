@@ -147,31 +147,31 @@ namespace pirkk::math {
 		T a = angle;
 		T c = cos(a);
 		T s = sin(a);
-		T t = 1 - c;
 
 		Vec3<T> ax = normalize(axis);
+		Vec3<T> tmp((T(1) - c) * ax);
 
-		T x = ax.x;
-		T y = ax.y;
-		T z = ax.z;
+		Mat4<T> r;
 
-		T v1r1 = x * y * t;
-		T v2r1 = z * s;
+		r[0][0] = c + tmp[0] * ax[0];
+		r[0][1] = tmp[0] * ax[1] + s * ax[2];
+		r[0][2] = tmp[0] * ax[2] - s * ax[1];
 
-		T v1r2 = x * z * t;
-		T v2r2 = y * s;
+		r[1][0] = tmp[1] * ax[0] - s * ax[2];
+		r[1][1] = c + tmp[1] * ax[1];
+		r[1][2] = tmp[1] * ax[2] + s * axis[0];
 
-		T v1r3 = y * z * t;
-		T v2r3 = x * s;
+		r[2][0] = tmp[2] * axis[0] + s * ax[1];
+		r[2][1] = tmp[2] * axis[1] - s * ax[0];
+		r[2][2] = c + tmp[2] * ax[2];
 
-		T matVals[] = {
-			c + x * x * t, v1r1 + v2r1, v1r2 - v2r2, 0,
-			v1r1 - v2r1, c + y * y * t, v1r3 + v2r3, 0,
-			v1r2 + v2r2, v1r3 - v2r3, c + z * z * t, 0,
-			0, 0, 0, 1
-		};
+		Mat4<T> m(1);
+		Mat4<T> out;
+		out[0] = m[0] * r[0][0] + m[1] * r[0][1] + m[2] * r[0][2];
+		out[1] = m[0] * r[1][0] + m[1] * r[1][1] + m[2] * r[1][2];
+		out[2] = m[0] * r[2][0] + m[1] * r[2][1] + m[2] * r[2][2];
 
-		return Mat4<T>(matVals);
+		return out;
 	}
 
 	// TODO: shear matrix

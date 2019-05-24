@@ -25,6 +25,7 @@
     <ClCompile Include="graphics\Shader.cpp" />
     <ClCompile Include="graphics\VertexBuffer.cpp" />
     <ClCompile Include="graphics\Window.cpp" />
+    <ClCompile Include="math\Math.cpp" />
     <ClCompile Include="ticking\TickCallback.cpp" />
     <ClCompile Include="ticking\TickManager.cpp" />
     <ClCompile Include="util\registry\RegistryHandler.cpp" />

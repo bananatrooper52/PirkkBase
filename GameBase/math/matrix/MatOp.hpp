@@ -56,6 +56,7 @@ Mat<T, W1, H0> operator##op(const Mat<T, W0, H0> &a, const Mat<T, W1, W0> &b) {	
 
 	PIRKK_MAT_OP_BIN_MAT_MAT_MUL(*);
 
+	// Mat op Mat addition and subtraction
 #define PIRKK_MAT_OP_BIN_MAT_MAT_ADD_SUB(op)														\
 template<typename T, size_t W, size_t H>															\
 Mat<T, W, H> operator##op(const Mat<T, W, H> &a, const Mat<T, W, H> &b) {							\
