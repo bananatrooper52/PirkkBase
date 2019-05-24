@@ -15,14 +15,21 @@ namespace pirkk::graphics {
 		using Pixel = pirkk::math::Vec<T, L>;
 		using Index = pirkk::math::Vec<unsigned int, D>;
 		Index size;
+		size_t getLinearSize() {
+			size_t out = 1;
+			for (size_t i = 0; i < D; i++) {
+				out *= size[i];
+			}
+			return out;
+		}
 
 	public:
 		std::vector<Pixel> data;
 
 		Texture() : size(Index()), data(std::vector<Pixel>()) {}
-		Texture(Index size) : size(size), data(std::vector<Pixel>((size_t)size.x * (size_t)size.y * 4)) {}
+		Texture(Index size) : size(size), data(std::vector<Pixel>(getLinearSize())) {}
 		Texture(Index size, std::vector<Pixel> data) : size(size), data(data) {
-			int expectedSize = pirkk::math::dot(size, Index(1));
+			int expectedSize = getLinearSize();
 			if (expectedSize != data.size())
 				throw std::runtime_error((std::stringstream() << "Incorrectly sized texture - expected " << std::to_string(expectedSize) << 
 					" bytes, but got " << std::to_string(data.size()) ).str());
