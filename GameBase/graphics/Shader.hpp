@@ -83,7 +83,7 @@ namespace pirkk::graphics {
 			case 2: glTexImage2D(target, 0, format, size.x, size.y, 0, format, type, data); break;
 			case 3: glTexImage3D(target, 0, format, size.x, size.y, size.z, 0, format, type, data); break;
 			}
-			
+
 			glTexParameteri(target, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_BORDER);
 			glTexParameteri(target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
 			glTexParameteri(target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);

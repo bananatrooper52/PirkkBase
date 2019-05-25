@@ -22,3 +22,4 @@ namespace pirkk::math {
 }
 
 #include "QuatOp.hpp"
+#include "QuatTypes.hpp"

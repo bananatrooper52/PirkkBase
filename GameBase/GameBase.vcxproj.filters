@@ -137,6 +137,9 @@
     <ClInclude Include="graphics\TextureFormats.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="math\quaternion\QuatTypes.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\screenCover\frag.glsl" />

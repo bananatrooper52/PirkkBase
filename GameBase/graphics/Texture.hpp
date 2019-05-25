@@ -31,8 +31,8 @@ namespace pirkk::graphics {
 		Texture(Index size, std::vector<Pixel> data) : size(size), data(data) {
 			int expectedSize = getLinearSize();
 			if (expectedSize != data.size())
-				throw std::runtime_error((std::stringstream() << "Incorrectly sized texture - expected " << std::to_string(expectedSize) << 
-					" bytes, but got " << std::to_string(data.size()) ).str());
+				throw std::runtime_error((std::stringstream() << "Incorrectly sized texture - expected " << std::to_string(expectedSize) <<
+					" bytes, but got " << std::to_string(data.size())).str());
 		}
 
 		void setPixel(Index pos, Pixel pixel) {

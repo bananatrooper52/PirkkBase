@@ -43,6 +43,7 @@
     <ClInclude Include="graphics\VertexBuffer.hpp" />
     <ClInclude Include="graphics\Window.hpp" />
     <ClInclude Include="math\quaternion\QuatOp.hpp" />
+    <ClInclude Include="math\quaternion\QuatTypes.hpp" />
     <ClInclude Include="math\vector\Vec1.hpp" />
     <ClInclude Include="ticking\TickCallback.hpp" />
     <ClInclude Include="ticking\TickManager.hpp" />

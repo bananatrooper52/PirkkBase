@@ -27,7 +27,7 @@ std::shared_ptr<Mesh> screenMesh;
 std::shared_ptr<RaytraceShader> shader;
 
 Vec3f cameraPos(0);
-Mat4f cameraRot;
+Quatf cameraRot;
 Vec2ui winSize(1024, 768);
 unsigned int pixScale = 1;
 
@@ -89,15 +89,21 @@ void Game::tick(float delta) {
 	float roll = 0;
 	if (window->getKey(GLFW_KEY_Q)) roll += delta;
 	if (window->getKey(GLFW_KEY_E)) roll -= delta;
-	cameraRot = rotate(Vec3f(cameraRot * Vec4f(0, 1, 0, 0)), -mouseMove.x * mouseSpeed) * cameraRot;
-	cameraRot = rotate(Vec3f(cameraRot * Vec4f(1, 0, 0, 0)), -mouseMove.y * mouseSpeed) * cameraRot;
-	cameraRot = rotate(Vec3f(cameraRot * Vec4f(0, 0, 1, 0)), roll) * cameraRot;
+	
+	cameraRot = axisAngle(cameraRot * Vec3f(0, 1, 0), -mouseMove.x * mouseSpeed) * cameraRot;
+	cameraRot = axisAngle(cameraRot * Vec3f(1, 0, 0), -mouseMove.y * mouseSpeed) * cameraRot;
+	cameraRot = axisAngle(cameraRot * Vec3f(0, 0, 1), roll) * cameraRot;
+
+	cameraRot = normalize(cameraRot);
+
+	Quat q = cameraRot;
+	std::cout << q.x << " : " << q.y << " : " << q.z << " | " << q.w << std::endl;
 
 	window->setMousePos(Vec2f(winSize) / 2.f);
 
-	Vec3f moveZ = Vec3f(cameraRot * Vec4f(0, 0, 1, 0)) * delta;
-	Vec3f moveX = Vec3f(cameraRot * Vec4f(1, 0, 0, 0)) * delta;
-	Vec3f moveY = Vec3f(cameraRot * Vec4f(0, 1, 0, 0)) * delta;
+	Vec3f moveZ = cameraRot * Vec3f(0, 0, 1) * delta;
+	Vec3f moveX = cameraRot * Vec3f(1, 0, 0) * delta;
+	Vec3f moveY = cameraRot * Vec3f(0, 1, 0) * delta;
 
 	if (window->getKey(GLFW_KEY_W)) cameraPos -= moveZ;
 	if (window->getKey(GLFW_KEY_S)) cameraPos += moveZ;
@@ -117,7 +123,7 @@ void Game::render() {
 	shader->uniform1f("t", sin(t) * 10.f);
 	shader->uniform2i("winSize", Vec2i(winSize));
 	shader->uniform3f("cameraPos", cameraPos);
-	shader->uniform4x4f("cameraRot", cameraRot);
+	shader->uniform4x4f("cameraRot", toMatrix(cameraRot));
 
 	screenMesh->render();
 
