@@ -96,9 +96,6 @@ void Game::tick(float delta) {
 
 	cameraRot = normalize(cameraRot);
 
-	Quat q = cameraRot;
-	std::cout << q.x << " : " << q.y << " : " << q.z << " | " << q.w << std::endl;
-
 	window->setMousePos(Vec2f(winSize) / 2.f);
 
 	Vec3f moveZ = cameraRot * Vec3f(0, 0, 1) * delta;
