@@ -64,27 +64,29 @@ namespace pirkk::graphics {
 		template<typename T, size_t L, size_t D>
 		void setTexture(std::string name, Texture<T, L, D>& tex) {
 
-			GLenum format = TextureFormats::getGLFormatEnum(L);
+			constexpr GLenum format = TextureFormats::getGLFormatEnum(L);
 			GLenum type = GLTypes::getGLTypeEnum<T>();
 			pirkk::math::Vec<unsigned int, D> size = tex.getSize();
 			void* data = &tex.data[0][0];
 			GLenum target;
 
-			switch (L) {
+			switch (D) {
 			case 1: target = GL_TEXTURE_1D; break;
 			case 2: target = GL_TEXTURE_2D; break;
 			case 3: target = GL_TEXTURE_3D; break;
 			default: throw std::exception("Invalid texture size");
 			}
 
-			glBindTexture(target, getTextureId(name));
 
-			switch (L) {
+			switch (D) {
 			case 1: glTexImage1D(target, 0, format, size.x, 0, format, type, data); break;
 			case 2: glTexImage2D(target, 0, format, size.x, size.y, 0, format, type, data); break;
 			case 3: glTexImage3D(target, 0, format, size.x, size.y, size.z, 0, format, type, data); break;
 			}
 			
+			glTexParameteri(target, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_BORDER);
+			glTexParameteri(target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+			glTexParameteri(target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
 			glTexParameteri(target, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 			glTexParameteri(target, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		}

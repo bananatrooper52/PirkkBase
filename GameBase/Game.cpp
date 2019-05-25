@@ -41,9 +41,17 @@ Game::Game() {
 
 	addRegistries();
 
-	Texture3D<float, 3> tex(Vec3ui(32, 32, 1));
+	size_t chunkSize = 32;
 
-	tex.data[0] = Vec3f(1, 0, 1);
+	Texture3D<float, 4> tex(Vec3ui(chunkSize, chunkSize, chunkSize));
+
+	for (size_t x = 0; x < chunkSize; x++) {
+		for (size_t y = 0; y < chunkSize; y++) {
+			for (size_t z = 0; z < chunkSize; z++) {
+				if (distance(Vec3f(x, y, z), Vec3f(15, 15, 15)) < 15) tex.data[x + y * 32 + z * 32 * 32] = Vec4f((rand() % 255) / 255.f, (rand() % 255) / 255.f, (rand() % 255) / 255.f, 1);
+			}
+		}
+	}
 
 	shader->setTexture("tex", tex);
 

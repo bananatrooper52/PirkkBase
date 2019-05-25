@@ -13,12 +13,12 @@ namespace pirkk::math {
 
 	// Linear interpolate a value (scalar or vector)
 	template<typename T, typename U>
-	T lerp(T a, T b, U t) {
+	T lerp(const T& a, const T& b, const U& t) {
 		return a + (b - a) * t;
 	}
 
 	template<typename T>
-	T abs(T & a) {
+	T abs(const T & a) {
 		return a >= 0 ? a : -a;
 	}
 
@@ -116,7 +116,7 @@ namespace pirkk::math {
 			for (size_t j = 0; j < i; j++) {
 				div += bounds[j];
 			}
-			index += pos[i] / div == 0 ? 1 : div;
+			index += pos[i] / ((div == 0) ? 1 : div);
 		}
 		return index;
 	}
